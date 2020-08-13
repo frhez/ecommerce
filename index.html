@@ -16,12 +16,14 @@
 
   <!-- Google Sign in API-->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <meta name="google-signin-client_id" content="490154075016-33kn7mda6khg18l899gn8m0bpcnbomdg.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="490154075016-33kn7mda6khg18l899gn8m0bpcnbomdg.apps.googleusercontent.com">
 
-  
+
 
   <style>
-    html, body{
+    html,
+    body {
       height: 100%;
     }
 
@@ -42,18 +44,18 @@
       margin: auto;
     }
 
-    h1{
+    h1 {
       margin: 15px 0px;
     }
 
-    .fields{
+    .fields {
       width: 80%;
     }
 
-    .button{
+    .button {
       margin: 10px;
       padding: 3px 0px;
-      background-color:mediumvioletred;
+      background-color: mediumvioletred;
       color: white;
       font-weight: bold;
     }
@@ -64,7 +66,7 @@
 
   <div class="signin">
     <img src="img/login.png" width="330px">
-    <form action="cover.html" method="POST">
+    <form action="cover.html" method="GET">
       <h1>Inicio de sesión</h1>
       <input type="text" placeholder="Nombre de usuario" required class="fields"><br>
       <input type="password" placeholder="Contraseña" required class="fields"><br>
@@ -85,8 +87,14 @@
     </div>
     
   -->
-  
+
   <script src="js/init.js"></script>
   <script src="js/login.js"></script>
+  <script>
+    function onSignIn(googleUser) {
+      location.href = "cover.html";
+    }
+  </script>
 </body>
+
 </html>
