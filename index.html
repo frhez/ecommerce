@@ -16,61 +16,94 @@
 
   <!-- Google Sign in API-->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <meta name="google-signin-client_id" content="490154075016-33kn7mda6khg18l899gn8m0bpcnbomdg.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="490154075016-33kn7mda6khg18l899gn8m0bpcnbomdg.apps.googleusercontent.com">
 
-  
+
 
   <style>
-    html, body{
+    html,
+    body {
       height: 100%;
     }
 
     body {
-      display: -ms-flexbox;
       display: flex;
-      -ms-flex-align: center;
       align-items: center;
       padding-top: 40px;
       padding-bottom: 40px;
-      background-color: #f5f5f5;
+      background: url("img/Green\ background.jpg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .firstContainer {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      margin-right: 20px;
     }
 
     .signin {
       width: 100%;
-      max-width: 330px;
+      max-width: 340px;
       padding: 15px;
       margin: auto;
+      background-color: whitesmoke;
     }
 
-    h1{
-      margin: 15px 0px;
+    .signInBtn {
+      margin: 12px 0 12px 0;
     }
 
-    .fields{
-      width: 80%;
+    .textWarning {
+      font-size: 12px;
+      color: red;
     }
 
-    .button{
-      margin: 10px;
-      padding: 3px 0px;
-      background-color:mediumvioletred;
-      color: white;
-      font-weight: bold;
+    h1 {
+      margin: 20px 0px;
+      color: #005bbd;
     }
   </style>
 </head>
 
 <body class="text-center">
+  <div class="container firstContainer">
+    <img src="img/login.png" class="rounded logo">
+    <div class="form-group signin rounded">
+      <h1><strong>Inicio de sesión</strong></h1>
+      <input type="text" id="userField" placeholder="Nombre de usuario" class="form-control">
+      <label id="userFieldInfo" class="textWarning"></label>
+      <input type="password" id="passwordField" placeholder="Contraseña" class="form-control">
+      <label id="passwordFieldInfo" class="textWarning"></label>
+      <input type="button" value="Iniciar sesión" class="btn btn-primary btn-block signInBtn" onclick="enterSite()">
+      <!--
+          <div class="g-signin2" data-onsuccess="onSignIn" style="text-align: -moz-center;"></div>
+        -->
+      <div id="my-signin2" class="d-flex justify-content-center"></div>
+      <script>
+        function onSuccess(googleUser) {
+          onSignIn();
+        }
+        function onFailure(error) {
+          console.log(error);
+        }
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSuccess,
+            'onfailure': onFailure
+          });
+        }
+      </script>
 
-  <div class="signin">
-    <img src="img/login.png" width="330px">
-    <form action="cover.html" method="GET">
-      <h1>Inicio de sesión</h1>
-      <input type="text" placeholder="Nombre de usuario" required class="fields"><br>
-      <input type="password" placeholder="Contraseña" required class="fields"><br>
-      <input type="submit" value="Iniciar sesión" class="button fields">
-      <div class="g-signin2" data-onsuccess="onSignIn" style="text-align: -moz-center;"></div>
-    </form>
+      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+      </form>
+    </div>
   </div>
 
   <!--
@@ -85,8 +118,9 @@
     </div>
     
   -->
-  
+
   <script src="js/init.js"></script>
   <script src="js/login.js"></script>
 </body>
+
 </html>
