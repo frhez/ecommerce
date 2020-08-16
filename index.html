@@ -28,8 +28,6 @@
     }
 
     body {
-      display: flex;
-      align-items: center;
       padding-top: 40px;
       padding-bottom: 40px;
       background: url("img/Green\ background.jpg") no-repeat center center fixed;
@@ -38,16 +36,17 @@
 
     .firstContainer {
       display: flex;
-      align-items: center;
+      align-content: center;
     }
 
     .logo {
-      margin-right: 20px;
+      margin: auto 20px auto 0;
+      max-width: 65%;
     }
 
     .signin {
-      width: 100%;
       max-width: 340px;
+      min-width: 220px;
       padding: 15px;
       margin: auto;
       background-color: whitesmoke;
@@ -59,6 +58,8 @@
 
     .textWarning {
       font-size: 12px;
+      min-height: 12px;
+      margin: 8px 0;
       color: red;
     }
 
@@ -69,10 +70,10 @@
   </style>
 </head>
 
-<body class="text-center">
-  <div class="container firstContainer">
-    <img src="img/login.png" class="rounded logo">
-    <div class="form-group signin rounded">
+<body class="text-center container">
+  <div class="d-flex justify-content-center h-100">
+    <img src="img/login.png" class="rounded logo shadow-lg">
+    <div class="form-group signin rounded shadow-lg">
       <h1><strong>Inicio de sesión</strong></h1>
       <input type="text" id="userField" placeholder="Nombre de usuario" class="form-control">
       <label id="userFieldInfo" class="textWarning"></label>
