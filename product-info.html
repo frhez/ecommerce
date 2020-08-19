@@ -35,7 +35,10 @@
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <button onclick="onSignOut()" class="btn btn-primary">Salir</button>
+      <div class="d-none d-md-inline-block bg-light rounded-pill border border-primary">
+        <span id="loggedInUser" class="pl-3 pr-1 font-weight-bold align-middle"></span>
+        <button onclick="onSignOut()" class="btn btn-primary rounded-pill">Salir</button>
+      </div>
     </div>
   </nav>
   <div class="container p-5">

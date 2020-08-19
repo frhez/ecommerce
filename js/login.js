@@ -2,10 +2,18 @@
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
+
+    let loggedInUserInfo = document.getElementById("loggedInUser");
+    let userName = localStorage.getItem('userName');
+    if (userName != null){
+        loggedInUserInfo.innerHTML = userName;
+    }
+
 });
 
 function enterSite() {
     if (checkUserInfo()) {
+        SaveUser(document.getElementById("userField").value)
         location.href = "cover.html";
     }
 }
@@ -17,7 +25,7 @@ function checkUserInfo() {
     let passwordInfo = document.getElementById("passwordFieldInfo");
 
     let userOk = false;
-    let passOk = false; 
+    let passOk = false;
     //User info
     if (userField.length > userField.trim().length) { //Check for empty fields
         userInfo.innerHTML = "No puede ingresar espacios en blanco!";
@@ -25,7 +33,7 @@ function checkUserInfo() {
     else if (userField.trim() === "") {
         userInfo.innerHTML = "El campo no puede quedar vacío!";
     }
-    else{
+    else {
         userInfo.innerHTML = "";
         userOk = true;
     }
@@ -45,22 +53,11 @@ function checkUserInfo() {
     }
 
     return userOk && passOk;
-    /*
-    if (userField.trim() === "" || passwordField.trim() === "") { //Check for empty fields
-        alert("Hay campos sin completar");
-        return false;
-    }
-    else if (userField.length > userField.trim().length || passwordField.length > passwordField.trim().length) {
-        alert("No puede ingresar espacios en blanco!");
-        return false;
-    }
-    else {
-        return true;
-    }
-    */
 }
 
-function onSignIn() {
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    SaveUser(profile.getName());
     location.href = "cover.html";
 }
 
@@ -76,4 +73,10 @@ function onSignOut() {
         console.error(error);
         location.href = "index.html";
     }
+    localStorage.clear();
+}
+
+//Save the logged user name
+function SaveUser(userName) {
+    localStorage.setItem('userName', userName);
 }
