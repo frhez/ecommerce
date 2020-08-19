@@ -4,6 +4,7 @@ var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minCount = undefined;
 var maxCount = undefined;
+var searchInput = undefined;
 
 function sortProducts(criteria, array) {
     let result = [];
@@ -37,24 +38,29 @@ function showProductsList() {
         let product = currentProductsArray[i];
 
         //Check for the price filters
-        if ((minCount == undefined || minCount <= parseInt(product.cost)) && (maxCount == undefined || parseInt(product.cost) <= maxCount)) {
-            htmlContentToAppend += `
-                <a href="product-info.html" class="list-group-item list-group-item-action">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
+        if ((minCount == undefined || minCount <= parseInt(product.cost)) &&
+            (maxCount == undefined || parseInt(product.cost) <= maxCount)) {
+            
+            //Check for the searched word
+            if (searchInput == undefined || product.name.toLowerCase().includes(searchInput.toLowerCase())) {
+                htmlContentToAppend += `
+                    <a href="product-info.html" class="list-group-item list-group-item-action">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
+                            </div>
+                            <div class="col">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h4 class="mb-1">`+ product.name + `</h4>
+                                    <small class="text-muted">` + product.soldCount + ` vendidos</small>
+                                    </div>
+                                <p class="mb-1">` + product.description + `</p>
+                                <br><br><br><h3 class="mb-1" style="text-align: right">` + product.currency + ` ` + product.cost.toLocaleString('es-UY') + `</h3>
+                            </div>
                         </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">`+ product.name + `</h4>
-                                <small class="text-muted">` + product.soldCount + ` vendidos</small>
-                                </div>
-                            <p class="mb-1">` + product.description + `</p>
-                            <br><br><br><h3 class="mb-1" style="text-align: right">` + product.currency + ` ` + product.cost.toLocaleString('es-UY') + `</h3>
-                        </div>
-                    </div>
-                </a>
+                    </a>
                 `
+            }
         }
     }
 
@@ -126,6 +132,18 @@ document.addEventListener("DOMContentLoaded", function (e) {
         minCount = undefined;
         maxCount = undefined;
 
+        showProductsList();
+    });
+
+    //Search bar
+    document.getElementById("searchProductBar").addEventListener("keyup", function () {
+        searchInput = document.getElementById("searchProductBar").value;
+
+        if (searchInput == undefined || searchInput === "") {
+            searchInput = undefined;
+        }
+
+        console.log(searchInput);
         showProductsList();
     });
 
