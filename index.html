@@ -41,19 +41,10 @@
 
     .logo {
       margin: auto 20px auto 0;
-      max-width: 65%;
     }
 
     .signin {
-      max-width: 340px;
-      min-width: 220px;
-      padding: 15px;
-      margin: auto;
       background-color: whitesmoke;
-    }
-
-    .signInBtn {
-      margin: 12px 0 12px 0;
     }
 
     .textWarning {
@@ -70,39 +61,43 @@
   </style>
 </head>
 
-<body class="text-center container">
-  <div class="d-flex justify-content-center h-100">
-    <img src="img/login.png" class="rounded logo shadow-lg">
-    <div class="form-group signin rounded shadow-lg">
-      <h1><strong>Inicio de sesión</strong></h1>
-      <input type="text" id="userField" placeholder="Nombre de usuario" class="form-control">
-      <label id="userFieldInfo" class="textWarning"></label>
-      <input type="password" id="passwordField" placeholder="Contraseña" class="form-control">
-      <label id="passwordFieldInfo" class="textWarning"></label>
-      <input type="button" value="Iniciar sesión" class="btn btn-primary btn-block signInBtn" onclick="enterSite()">
-      <!--
-          <div class="g-signin2" data-onsuccess="onSignIn" style="text-align: -moz-center;"></div>
-        -->
-      <div id="my-signin2" class="d-flex justify-content-center"></div>
-      <script>
-        function onSuccess(googleUser) {
-          onSignIn(googleUser);
-        }
-        function onFailure(error) {
-          console.log(error);
-        }
-        function renderButton() {
-          gapi.signin2.render('my-signin2', {
-            'scope': 'profile email',
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onSuccess,
-            'onfailure': onFailure
-          });
-        }
-      </script>
-
-      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<body class="container text-center">
+  <div class="row h-100 align-content-center">
+    <div class="col-12 col-lg-8 my-2 align-self-center">
+      <img src="img/login.png" class="rounded shadow-lg w-100">
+    </div>
+    <div class="col-12 col-lg-4 my-2">
+      <div class="signin rounded shadow-lg w-100 py-1 px-4">
+        <h1><strong>Inicio de sesión</strong></h1>
+        <input type="email" id="userField" placeholder="Nombre de usuario" class="form-control" required maxlength="40">
+        <label id="userFieldInfo" class="textWarning"></label>
+        <input type="password" id="passwordField" placeholder="Contraseña" class="form-control">
+        <label id="passwordFieldInfo" class="textWarning" required></label>
+        <input type="button" value="Iniciar sesión" class="btn btn-primary btn-block my-2" onclick="enterSite()">
+        <!--
+            <div class="g-signin2" data-onsuccess="onSignIn" style="text-align: -moz-center;"></div>
+          -->
+        <div id="my-signin2" class="d-flex justify-content-center my-2"></div>
+        <script>
+          function onSuccess(googleUser) {
+            onSignIn(googleUser);
+          }
+          function onFailure(error) {
+            console.log(error);
+          }
+          function renderButton() {
+            gapi.signin2.render('my-signin2', {
+              'scope': 'profile email',
+              'longtitle': true,
+              'theme': 'dark',
+              'onsuccess': onSuccess,
+              'onfailure': onFailure
+            });
+          }
+        </script>
+  
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+      </div>
     </div>
   </div>
 

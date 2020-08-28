@@ -40,22 +40,52 @@ function showProductsList() {
         //Check for the price filters
         if ((minCount == undefined || minCount <= parseInt(product.cost)) &&
             (maxCount == undefined || parseInt(product.cost) <= maxCount)) {
-            
+
             //Check for the searched word
-            if (searchInput == undefined || product.name.toLowerCase().includes(searchInput.toLowerCase())) {
+            if (searchInput == undefined || product.name.toLowerCase().indexOf(searchInput) != -1) {
+
+                let productName = product.name;
+                
+                if (searchInput != undefined){
+
+                    productName = "";
+
+                    let firstLetter = product.name.toLowerCase().indexOf(searchInput);
+                    let lastLetter = firstLetter + searchInput.length;
+
+                    if(firstLetter > 0){
+                        productName = product.name.substring(0, firstLetter);
+                    }
+                    productName += '<span style="text-decoration: underline;">';
+                    productName += product.name.substring(firstLetter, lastLetter);
+                    productName += '</span>';
+
+                    if(lastLetter < product.name.length){
+                        productName += product.name.substring(lastLetter, product.name.length); 
+                    }
+                }
+
                 htmlContentToAppend += `
                     <a href="product-info.html" class="list-group-item list-group-item-action">
-                        <div class="row">
-                            <div class="col-3">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-3 my-1">
                                 <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
                             </div>
-                            <div class="col">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h4 class="mb-1">`+ product.name + `</h4>
-                                    <small class="text-muted">` + product.soldCount + ` vendidos</small>
+                            <div class="col-md-9 my-1">
+                                <div class="card w-100">
+                                    <div class="card-header">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <h4 class="font-weight-bold mb-0">`+ productName + `</h4>
+                                            <h3 class="text-right mb-0">` + product.currency + ` ` + product.cost.toLocaleString('es-UY') + `</h3>
+                                        </div>
                                     </div>
-                                <p class="mb-1">` + product.description + `</p>
-                                <br><br><br><h3 class="mb-1" style="text-align: right">` + product.currency + ` ` + product.cost.toLocaleString('es-UY') + `</h3>
+                                    <div class="card-body">
+                                        <p class="mb-1">` + product.description + `</p>
+                                    </div>
+                                    <div class="card-footer px-3 py-1 text-right">
+                                        <small class="text-muted">` + product.soldCount + ` vendidos</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -136,14 +166,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     //Search bar
-    document.getElementById("searchProductBar").addEventListener("keyup", function () {
+    document.getElementById("searchProductBar").addEventListener("input", function () {
         searchInput = document.getElementById("searchProductBar").value;
 
         if (searchInput == undefined || searchInput === "") {
             searchInput = undefined;
         }
+        else{
+            searchInput = searchInput.toLowerCase()
+        }
 
-        console.log(searchInput);
         showProductsList();
     });
 

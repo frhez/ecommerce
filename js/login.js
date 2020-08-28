@@ -4,8 +4,8 @@
 document.addEventListener("DOMContentLoaded", function (e) {
 
     let loggedInUserInfo = document.getElementById("loggedInUser");
-    let userName = localStorage.getItem('userName');
-    if (userName != null){
+    let userName = GetSavedUser();
+    if (userName != null && loggedInUserInfo != null) {
         loggedInUserInfo.innerHTML = userName;
     }
 
@@ -57,26 +57,20 @@ function checkUserInfo() {
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    SaveUser(profile.getName());
+    SaveUser(profile.getEmail());
     location.href = "cover.html";
-}
-
-//Sign out the user
-function onSignOut() {
-    try {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-            location.href = "index.html";
-        });
-    }
-    catch (error) {
-        console.error(error);
-        location.href = "index.html";
-    }
-    localStorage.clear();
 }
 
 //Save the logged user name
 function SaveUser(userName) {
-    localStorage.setItem('userName', userName);
+    localStorage.setItem('userName', JSON.stringify({ email: userName }));
+}
+
+function GetSavedUser() {
+    if (localStorage.getItem('userName') != null) {
+        return JSON.parse(localStorage.getItem('userName')).email;
+    }
+    else {
+        return null;
+    }
 }

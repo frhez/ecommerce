@@ -31,17 +31,18 @@
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="cover.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <div class="d-none d-md-inline-block bg-light rounded-pill border border-primary">
+      <a class="py-2 d-none d-md-inline-block mt-1" href="cover.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block mt-1" href="categories.html">Categorías</a>
+      <a class="py-2 d-none d-md-inline-block mt-1" href="products.html">Productos</a>
+      <a class="py-2 d-none d-md-inline-block mt-1" href="sell.html">Vender</a>
+      <a class="py-2 d-none d-md-inline-block mt-1" href="cart.html">Mi carrito</a>
+      <div id="loggedInDiv" class="d-none d-md-inline-block bg-light rounded-pill border border-primary my-2">
         <span id="loggedInUser" class="pl-3 pr-1 font-weight-bold align-middle"></span>
-        <button onclick="onSignOut()" class="btn btn-primary rounded-pill">Salir</button>
+        <button onclick="onSignOut()" class="btn btn-primary py-0 rounded-pill">Salir</button>
       </div>
     </div>
   </nav>
+  
   <main role="main">
     <section class="jumbotron text-center">
       <div class="m-5">
@@ -124,7 +125,6 @@
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
-  <script src="js/login.js"></script>
 </body>
 
 </html>
