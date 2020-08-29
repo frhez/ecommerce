@@ -1,5 +1,6 @@
 const ORDER_BY_RELEVANCE = "Relevance";
-const ORDER_BY_PRICE = "Price"
+const ORDER_BY_PRICE_ASC = "PriceASC"
+const ORDER_BY_PRICE_DESC = "PriceDESC"
 var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minCount = undefined;
@@ -17,7 +18,7 @@ function sortProducts(criteria, array) {
             if (aSoldCount < bSoldCount) { return 1; }
             return 0;
         });
-    } else if (criteria === ORDER_BY_PRICE) {
+    } else if (criteria === ORDER_BY_PRICE_ASC) {
         result = array.sort(function (a, b) {
             let aCost = parseInt(a.cost);
             let bCost = parseInt(b.cost);
@@ -26,8 +27,16 @@ function sortProducts(criteria, array) {
             if (aCost > bCost) { return 1; }
             return 0;
         });
-    }
+    } else if (criteria === ORDER_BY_PRICE_DESC) {
+        result = array.sort(function (a, b) {
+            let aCost = parseInt(a.cost);
+            let bCost = parseInt(b.cost);
 
+            if (aCost > bCost) { return -1; }
+            if (aCost < bCost) { return 1; }
+            return 0;
+        });
+    }
     return result;
 }
 
@@ -45,23 +54,23 @@ function showProductsList() {
             if (searchInput == undefined || product.name.toLowerCase().indexOf(searchInput) != -1) {
 
                 let productName = product.name;
-                
-                if (searchInput != undefined){
+
+                if (searchInput != undefined) {
 
                     productName = "";
 
                     let firstLetter = product.name.toLowerCase().indexOf(searchInput);
                     let lastLetter = firstLetter + searchInput.length;
 
-                    if(firstLetter > 0){
+                    if (firstLetter > 0) {
                         productName = product.name.substring(0, firstLetter);
                     }
                     productName += '<span style="text-decoration: underline;">';
                     productName += product.name.substring(firstLetter, lastLetter);
                     productName += '</span>';
 
-                    if(lastLetter < product.name.length){
-                        productName += product.name.substring(lastLetter, product.name.length); 
+                    if (lastLetter < product.name.length) {
+                        productName += product.name.substring(lastLetter, product.name.length);
                     }
                 }
 
@@ -126,9 +135,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
         sortAndShowProducts(ORDER_BY_RELEVANCE);
     });
 
-    //Sorts the elements by price when click on the button
-    document.getElementById("sortByPrice").addEventListener("click", function () {
-        sortAndShowProducts(ORDER_BY_PRICE);
+    //Sorts the elements by price when click on the button from lower to higher
+    document.getElementById("sortByPriceAsc").addEventListener("click", function () {
+        sortAndShowProducts(ORDER_BY_PRICE_ASC);
+    });
+
+    //Sorts the elements by price when click on the button from higher to lower
+    document.getElementById("sortByPriceDesc").addEventListener("click", function () {
+        sortAndShowProducts(ORDER_BY_PRICE_DESC);
     });
 
     //Filter the elements by its price when click on the button 'Filtrar'
@@ -172,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         if (searchInput == undefined || searchInput === "") {
             searchInput = undefined;
         }
-        else{
+        else {
             searchInput = searchInput.toLowerCase()
         }
 
