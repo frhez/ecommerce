@@ -13,7 +13,8 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-
+  <!-- Star icons-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://apis.google.com/js/platform.js"></script>
   <script>
     var auth2;
@@ -41,14 +42,42 @@
       </div>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+
+
+  <main role="main" class="pb-5">
+    <!--Here is the info of the product-->
+    <div class="container p-5 mt-3 border rounded shadow">
+      <div class="row p-3" id="productInfo"></div>
+
+      <!--Here is the comments section-->
+      <div class="row p-3 my-4 border shadow rounded" id="productComments"></div>
+
+      <!-- Here you can write a new comment -->
+      <div id="writeComment" class="d-none">
+        <div class="form-group p-4 border rounded shadow">
+          <h5 class="mb-4">Nos gusta escucharte, dános tu opinion</h5>
+          <div class="form-inline">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><span class="far fa-star star"></span></div>
+              </div>
+              <select name="select" id="commentRate" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+              </select>
+            </div>
+          </div>
+          <textarea type="text-area" id="commentContent" class="form-control my-3" placeholder="Escribe que te pareció el producto..." maxlength="850" rows="8"></textarea>
+          <button class="btn btn-primary" onclick="publishComment()">Publicar</button>
+        </div>
+      </div>
+
     </div>
-  </div>
+  </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">

@@ -75,7 +75,7 @@ function showProductsList() {
                 }
 
                 htmlContentToAppend += `
-                    <a href="product-info.html" class="list-group-item list-group-item-action">
+                    <button onclick="toProduct(` + i + `)" class="list-group-item list-group-item-action">
                         <div class="row d-flex align-items-center">
                             <div class="col-md-3 my-1">
                                 <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
@@ -97,7 +97,7 @@ function showProductsList() {
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </button>
                 `
             }
         }
@@ -117,6 +117,12 @@ function sortAndShowProducts(sortCriteria, productsArray) {
 
     //Muestro los productos ordenados
     showProductsList();
+}
+
+
+function toProduct(index){
+    //localStorage.setItem('productIndex', JSON.stringify({productIndex: index}));
+    window.location = "product-info.html";
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
