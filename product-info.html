@@ -36,18 +36,31 @@
       <a class="py-2 d-none d-md-inline-block mt-1" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block mt-1" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block mt-1" href="cart.html">Mi carrito</a>
-      <div id="loggedInDiv" class="d-none d-md-inline-block bg-light rounded-pill border border-primary my-2">
-        <span id="loggedInUser" class="pl-3 pr-1 font-weight-bold align-middle"></span>
-        <button onclick="onSignOut()" class="btn btn-primary py-0 rounded-pill">Salir</button>
-      </div>
+      <div id="logInDiv"></div>
     </div>
   </nav>
 
 
   <main role="main" class="pb-5">
     <!--Here is the info of the product-->
-    <div class="container p-5 mt-3 border rounded shadow">
+    <div class="container px-5 py-4 mt-3 border rounded shadow">
       <div class="row p-3" id="productInfo"></div>
+
+      <!--Here is the related products-->
+      <!--
+
+        <div id="relatedProducts">
+          <h3 class="ml-4 my-2 w-100">Productos relacionados</h3>
+          <div class="row d-flex">
+            <div class="col-3 mx-3">
+              <img src="img/prod2.jpg" alt="auto1" class="row img-thumbnail">
+            </div>
+            <div class="col-3 mx-3">
+            <img src="img/prod4.jpg" alt="auto1" class="row img-thumbnail">
+          </div>
+        </div>
+      </div>
+    -->
 
       <!--Here is the comments section-->
       <div class="row p-3 my-4 border shadow rounded" id="productComments"></div>
@@ -70,8 +83,9 @@
               </select>
             </div>
           </div>
-          <textarea type="text-area" id="commentContent" class="form-control my-3" placeholder="Escribe que te pareció el producto..." maxlength="850" rows="8"></textarea>
-          <button class="btn btn-primary" onclick="publishComment()">Publicar</button>
+          <textarea type="text-area" id="commentContent" class="form-control my-3"
+            placeholder="Escribe que te pareció el producto..." maxlength="850" rows="8"></textarea>
+          <button id="btnPublishComment" class="btn btn-primary" onclick="publishComment()">Publicar</button>
         </div>
       </div>
 

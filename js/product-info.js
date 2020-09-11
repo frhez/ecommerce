@@ -36,13 +36,13 @@ function checkWriteComment() {
 //Show the message on the screen
 function publishComment() {
     //Gets the values
-    let rate = document.getElementById("commentRate").value;
-    let commentContent = document.getElementById("commentContent").value;
+    let rate = document.getElementById("commentRate");
+    let commentContent = document.getElementById("commentContent");
     let user = JSON.parse(localStorage.getItem('userName')).email;
     let d = new Date();
     let date = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + " " +
         ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-    let comment = { score: rate, description: commentContent, user: user, dateTime: date };
+    let comment = { score: parseInt(rate.value), description: commentContent.value, user: user, dateTime: date };
 
     console.log(comment);
 
@@ -51,8 +51,12 @@ function publishComment() {
     document.getElementById("productComments").innerHTML = "";
     loadProductComments();
 
-    //Clear the published message
+    //Clear the published message and disabled the option
     commentContent.value = "";
+    rate.value = "5";
+    commentContent.disabled = true;
+    rate.disabled = true;
+    document.getElementById("btnPublishComment").disabled = true;
 }
 
 //Loads the product info
@@ -64,7 +68,7 @@ function loadProductInfo() {
     productInfo += `
         <div class="col-12 col-lg-8">
             <div class="row mt-3 mr-md-4">
-                <h2 class="col-12 col-md-8 font-weight-bold">${product.name}</h2>`;
+                <h1 class="col-12 col-md-8 font-weight-bold">${product.name}</h1>`;
 
     //Load the stars
     //Calculate the average
@@ -100,7 +104,7 @@ function loadProductInfo() {
     }
     productInfo += `
             </ol>
-            <div class="carousel-inner">`;
+            <div class="carousel-inner rounded">`;
     //The carousel images
     for (let i = 0; i < product.images.length; i++) {
         if (i === 0) {
