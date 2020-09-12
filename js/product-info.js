@@ -57,6 +57,35 @@ function publishComment() {
     commentContent.disabled = true;
     rate.disabled = true;
     document.getElementById("btnPublishComment").disabled = true;
+
+    updateGlobalRate();
+}
+
+function updateGlobalRate() {
+    let globalRateDiv = document.getElementById("globalRate");
+    globalRateDiv.innerHTML = "";
+
+    let content = "";
+
+    //Load the stars
+    //Calculate the average
+    let rateAvg = 0;
+    for (let i = 0; i < comments.length; i++) {
+        rateAvg += comments[i].score;
+    }
+    rateAvg /= comments.length;
+
+    content += rateAsStars(rateAvg);
+
+    content += `
+                <span>${rateAvg}/5</span>
+                <div class="w-100"></div>
+                <span class="text-muted">${product.soldCount} vendidos.</span>
+            </div>
+        </div>`;
+
+    globalRateDiv.innerHTML = content;
+
 }
 
 //Loads the product info
@@ -78,7 +107,7 @@ function loadProductInfo() {
     }
     rateAvg /= comments.length;
 
-    productInfo += '<div class="col-12 col-md-4 text-md-right text-left">';
+    productInfo += '<div id="globalRate" class="col-12 col-md-4 text-md-right text-left">';
     productInfo += rateAsStars(rateAvg);
 
     productInfo += `
@@ -216,6 +245,9 @@ function rateAsStars(rate) {
     if (rate % 1 > 0 && rate % 1 <= 0.5) {
         starsIn++;
         starString += '<span class="fas fa-star-half-alt star checked"></span>';
+    } else if (rate % 1 > 0.5 && rate % 1 < 1) {
+        starsIn++;
+        starString += '<span class="fas fa-star star checked"></span>';
     }
 
     //Empty stars
