@@ -59,27 +59,33 @@ function loadLogInDiv(userLoggedIn) {
   let logInDiv = document.getElementById("logInDiv");
 
   //In the log in screen doesnt make sense
-  if(logInDiv){
+  if (logInDiv) {
     let content = "";
-  
-    if (userLoggedIn){
-  
+
+    if (userLoggedIn) {
+
       let userName = JSON.parse(userLoggedIn).email;
       content = `
-            <div id="loggedInDiv" class="d-none d-md-inline-block bg-light rounded-pill border border-primary my-2">
-              <span id="loggedInUser" class="pl-3 pr-1 font-weight-bold align-middle">${userName}</span>
-              <button onclick="onSignOut()" class="btn btn-primary py-0 rounded-pill">Salir</button>
-            </div>
+              <a class="dropdown-toggle btn btn-login  rounded-pill" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="font-weight-bold">${userName}</span>
+              </a>
+              <div class="w-100 dropdown-menu dropdown-login text-center text-lg-left" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item dropdown-item-login" href="cart.html">Mi carrito</a>
+                <a class="dropdown-item dropdown-item-login" href="my-profile.html">Perfil</a>
+                <div class="dropdown-divider" style="border-color: #f1cdd3;"></div>
+                <button class="dropdown-item dropdown-item-login" onclick="onSignOut()">Cerrar sesión</button>
+              </div>
       `;
     }
-    else{
+    else {
       content = `
-            <div id="askToLogInDiv" class="d-none d-md-inline-block rounded-pill border border-primary my-2">
-              <a href="index.html" class="btn btn-primary py-0 rounded-pill">Iniciar sesión</a>
+            <div id="askToLogInDiv">
+              <a href="index.html" class="btn btn-login">Iniciar sesión</a>
             </div>
       `;
     }
-  
+
     logInDiv.innerHTML = content;
   }
 
@@ -89,7 +95,7 @@ function loadLogInDiv(userLoggedIn) {
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
-  
+
   let userName = localStorage.getItem('userName');
 
   loadLogInDiv(userName);

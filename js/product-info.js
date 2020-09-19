@@ -1,3 +1,4 @@
+var allProducts = [];
 var product;
 var comments = [];
 
@@ -6,21 +7,29 @@ var comments = [];
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
-    //Gets the content of the json
-    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            comments = resultObj.data;
-        }
 
-        //Gets the content of the json
+    //Gets the list of products from the JSON
+    getJSONData(PRODUCTS_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            allProducts = resultObj.data;
+        }
+    }).then(function (result) {
+        //Gets the comments of the product from the JSON
+        getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
+            if (resultObj.status === "ok") {
+                comments = resultObj.data;
+            }
+        });
+    }).then(function (result) {
+        //Gets the info of the product from the JSON
         getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
             if (resultObj.status === "ok") {
                 product = resultObj.data;
-                seeProduct();
+                seeProduct(product, comments, allProducts);
             }
         });
-    });
 
+    });
     checkWriteComment();
 
 });
@@ -49,7 +58,7 @@ function publishComment() {
     //Load the commment on the page
     comments.push(comment);
     document.getElementById("productComments").innerHTML = "";
-    loadProductComments();
+    loadProductComments(comments);
 
     //Clear the published message and disabled the option
     commentContent.value = "";
@@ -89,7 +98,7 @@ function updateGlobalRate() {
 }
 
 //Loads the product info
-function loadProductInfo() {
+function loadProductInfo(product) {
     //Product info
     let productInfo = "";
 
@@ -175,13 +184,14 @@ function loadProductInfo() {
                 <div class="w-100 border-bottom my-4"></div>
                 <p class="col mx-4 align-self-center">${product.description}</p>
             </div>
+        </div>
     `;
 
 
     document.getElementById("productInfo").innerHTML = productInfo;
 }
 
-function loadProductComments() {
+function loadProductComments(comments) {
     //Comments
     let productComments = `
         <h4 class="font-weight-bold">Comentarios</h4>
@@ -218,11 +228,40 @@ function loadProductComments() {
     document.getElementById("productComments").innerHTML = productComments;
 }
 
+//Loads the related products info in the div
+function loadRelatedProducts(relatedProducts, productsArray) {
+    if (productsArray != null) {
+
+        let relatedProductsDiv = document.getElementById("relatedProducts");
+        let relatedProdsContent = "";
+
+        relatedProducts.forEach(function (element) {
+            relatedProdsContent += `
+                <div class="row">
+                    <div class="card my-3">
+                    <div class="card-body">
+                        <img src="${productsArray[element].imgSrc}" alt="auto1" class="rounded w-100">
+                    </div>
+                    <div class="card-footer">
+                        <h5 class="font-weight-bold m-2">${productsArray[element].name}</h5>
+                    </div>
+                    </div>
+                </div>
+        
+            `;
+        });
+
+        relatedProductsDiv.innerHTML = relatedProdsContent;
+
+    }
+}
+
 
 //Loads the info of the product into the page
-function seeProduct() {
-    loadProductInfo();
-    loadProductComments();
+function seeProduct(product, comments, allProducts) {
+    loadProductInfo(product);
+    loadProductComments(comments);
+    loadRelatedProducts(product.relatedProducts, allProducts);
 }
 
 

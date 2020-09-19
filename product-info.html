@@ -29,14 +29,33 @@
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block mt-1" href="cover.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block mt-1" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block mt-1" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block mt-1" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block mt-1" href="cart.html">Mi carrito</a>
-      <div id="logInDiv"></div>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #6d0757;">
+    <div class="navbar-brand ml-2" href="#">
+      <img src="img/brand 1.png" height="42" class="mx-1">
+      <img src="img/brand.png" height="28" class="mx-1">
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav w-100 d-flex text-center">
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="cover.html">Inicio</a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="categories.html">Categorías</a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="products.html">Productos</a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="sell.html">Vender</a>
+        </li>
+        <li id="logInDiv" class="ml-lg-auto nav-item dropdown ">
+        </li>
+      </ul>
     </div>
   </nav>
 
@@ -46,48 +65,51 @@
     <div class="container px-5 py-4 mt-3 border rounded shadow">
       <div class="row p-3" id="productInfo"></div>
 
-      <!--Here is the related products-->
-      <!--
 
-        <div id="relatedProducts">
-          <h3 class="ml-4 my-2 w-100">Productos relacionados</h3>
-          <div class="row d-flex">
-            <div class="col-3 mx-3">
-              <img src="img/prod2.jpg" alt="auto1" class="row img-thumbnail">
-            </div>
-            <div class="col-3 mx-3">
-            <img src="img/prod4.jpg" alt="auto1" class="row img-thumbnail">
-          </div>
-        </div>
-      </div>
-    -->
+      <!-- The comments and the related products -->
+      <div class="row justify-content-around my-4">
 
-      <!--Here is the comments section-->
-      <div class="row p-3 my-4 border shadow rounded" id="productComments"></div>
-
-      <!-- Here you can write a new comment -->
-      <div id="writeComment" class="d-none">
-        <div class="form-group p-4 border rounded shadow">
-          <h5 class="mb-4">Nos gusta escucharte, dános tu opinion</h5>
-          <div class="form-inline">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text"><span class="far fa-star star"></span></div>
+        <!--Here is the comments section-->
+        <div class="col-12 col-lg-8 my-3 border rounded shadow">
+          <!-- The comments -->
+          <div id="productComments" class="row px-4 my-3"></div>
+          <!-- Here you can write a new comment -->
+          <div id="writeComment" class="row d-none w-100 mb-4 px-5">
+            <div class="form-group p-4 border rounded shadow-sm bg-light">
+              <h5 class="mb-4">Nos gusta escucharte, dános tu opinion</h5>
+              <div class="form-inline">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><span class="far fa-star star"></span></div>
+                  </div>
+                  <select name="select" id="commentRate" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5" selected>5</option>
+                  </select>
+                </div>
               </div>
-              <select name="select" id="commentRate" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5" selected>5</option>
-              </select>
+              <textarea type="text-area" id="commentContent" class="form-control my-3"
+                placeholder="Escribe que te pareció el producto..." maxlength="850" rows="8"></textarea>
+              <button id="btnPublishComment" class="btn btn-primary" onclick="publishComment()">Publicar</button>
             </div>
           </div>
-          <textarea type="text-area" id="commentContent" class="form-control my-3"
-            placeholder="Escribe que te pareció el producto..." maxlength="850" rows="8"></textarea>
-          <button id="btnPublishComment" class="btn btn-primary" onclick="publishComment()">Publicar</button>
         </div>
+
+        <!--Here is the related products-->
+        <div class="col-12 col-lg-3 text-center">
+          <div class="p-3 my-3 border shadow-sm rounded">
+            <h4 class="font-weight-bold">Productos relacionados</h4>
+
+            <div id="relatedProducts" class="row d-flex mx-2 p-2"></div>
+          </div>
+        </div>
+
       </div>
+
+
 
     </div>
   </main>

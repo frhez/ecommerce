@@ -148,3 +148,16 @@ a.custom-card:hover {
 .star-dark {
   color: black;
 }
+
+.btn-login{
+  color: #fbe7ea;
+  background-color: #c3277d;
+}
+
+.dropdown-login{
+  background-color: #fbe7ea;
+}
+
+.dropdown-item-login{
+  color: #c3277d;
+}
