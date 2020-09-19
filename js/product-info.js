@@ -12,33 +12,26 @@ document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCTS_URL).then(function (resultObj) {
         if (resultObj.status === "ok") {
             allProducts = resultObj.data;
+            getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
+                if (resultObj.status === "ok") {
+                    comments = resultObj.data;
+                    getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
+                        if (resultObj.status === "ok") {
+                            product = resultObj.data;
+                            seeProduct(product, comments, allProducts);
+                        }
+                    });
+                }
+            });
         }
-    }).then(function (result) {
-        //Gets the comments of the product from the JSON
-        getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
-            if (resultObj.status === "ok") {
-                comments = resultObj.data;
-            }
-        });
-    }).then(function (result) {
-        //Gets the info of the product from the JSON
-        getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
-            if (resultObj.status === "ok") {
-                product = resultObj.data;
-                seeProduct(product, comments, allProducts);
-            }
-        });
-
     });
     checkWriteComment();
-
 });
 
 //Check if there is an user logged in
 function checkWriteComment() {
     if (localStorage.getItem('userName')) {
         document.getElementById("writeComment").classList.remove("d-none");
-        document.getElementById("writeComment").classList.add("d-block");
     }
 }
 

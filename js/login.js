@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 function enterSite() {
     if (checkUserInfo()) {
-        SaveUser(document.getElementById("userField").value)
+        SaveUser(document.getElementById("userField").value, false);
         location.href = "cover.html";
     }
 }
@@ -57,13 +57,13 @@ function checkUserInfo() {
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    SaveUser(profile.getEmail());
+    SaveUser(profile.getEmail(), true);
     location.href = "cover.html";
 }
 
 //Save the logged user name
-function SaveUser(userName) {
-    localStorage.setItem('userName', JSON.stringify({ email: userName }));
+function SaveUser(userName, isGoogleUser) {
+    localStorage.setItem('userName', JSON.stringify({ email: userName, isGoogleUser: isGoogleUser}));
 }
 
 function GetSavedUser() {

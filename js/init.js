@@ -42,16 +42,16 @@ var getJSONData = function (url) {
 
 //Sign out the user
 function onSignOut() {
-  try {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      location.href = "index.html";
-    });
+  let userLogged = localStorage.getItem('userName');
+  if (userLogged) {
+    userLogged = JSON.parse(userLogged);
+    if (userLogged.isGoogleUser) {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+      });
+    }
   }
-  catch (error) {
-    console.error(error);
-    location.href = "index.html";
-  }
+  location.href = "index.html";
   localStorage.clear();
 }
 
@@ -70,7 +70,7 @@ function loadLogInDiv(userLoggedIn) {
                 aria-haspopup="true" aria-expanded="false">
                 <span class="font-weight-bold">${userName}</span>
               </a>
-              <div class="w-100 dropdown-menu dropdown-login text-center text-lg-left" aria-labelledby="navbarDropdown">
+              <div class="w-100 dropdown-menu dropdown-menu-right dropdown-login text-center text-lg-left" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item dropdown-item-login" href="cart.html">Mi carrito</a>
                 <a class="dropdown-item dropdown-item-login" href="my-profile.html">Perfil</a>
                 <div class="dropdown-divider" style="border-color: #f1cdd3;"></div>
