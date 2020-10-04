@@ -4,7 +4,8 @@ const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/12
 const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
 const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678.json";
 const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
-const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
+//const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
+const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/654.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 
 var showSpinner = function () {
@@ -70,11 +71,11 @@ function loadLogInDiv(userLoggedIn) {
                 aria-haspopup="true" aria-expanded="false">
                 <span class="font-weight-bold">${userName}</span>
               </a>
-              <div class="w-100 dropdown-menu dropdown-menu-right dropdown-login text-center text-lg-left" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item dropdown-item-login" href="cart.html">Mi carrito</a>
-                <a class="dropdown-item dropdown-item-login" href="my-profile.html">Perfil</a>
+              <div class="w-100 dropdown-menu dropdown-menu-right bg-light-pink text-center text-lg-left" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-pink" href="cart.html">Mi carrito</a>
+                <a class="dropdown-item text-pink" href="my-profile.html">Perfil</a>
                 <div class="dropdown-divider" style="border-color: #f1cdd3;"></div>
-                <button class="dropdown-item dropdown-item-login" onclick="onSignOut()">Cerrar sesión</button>
+                <button class="dropdown-item text-pink" onclick="onSignOut()">Cerrar sesión</button>
               </div>
       `;
     }
@@ -89,6 +90,12 @@ function loadLogInDiv(userLoggedIn) {
     logInDiv.innerHTML = content;
   }
 
+}
+
+//Return the sign from a currency
+function convertCurrencySign(currency){
+  if(currency === "USD"){ return "$USD"}
+  if(currency === "UYU"){ return "$"}
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de

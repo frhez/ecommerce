@@ -70,19 +70,119 @@
         <li class="nav-item mx-3">
           <a class="nav-link" href="sell.html">Vender</a>
         </li>
-        <li id="logInDiv" class="mr-4 ml-lg-auto nav-item dropdown ">
+        <li id="logInDiv" class="mr-lg-4 ml-lg-auto nav-item dropdown">
         </li>
       </ul>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega:
-        25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <div class="container px-4 py-4 mt-3 border rounded shadow">
+    <h1 class="text-center">Mi carrito</h1>
+
+    <!--Here is the info of the cart, the products and the price-->
+    <div id="divCarrito" class="p-3">
+
+      <div class="">
+        <div class="row">
+
+          <!-- Items in the cart -->
+          <div id="cartArticles" class="col-12 col-lg-8 py-3 pr-4 border rounded shadow-sm mr-lg-4"></div>
+
+          <!-- Subtotal and total price -->
+          <div class="col border rounded shadow p-4">
+            <div class="row p-2">
+              <!-- Button for selecting shipping method -->
+              <button type="button" class="btn btn-primary w-100 my-2" data-toggle="modal"
+                data-target="#shippingSelectModal">
+                Opciones de envío
+              </button>
+              <!-- Here is the shipping info -->
+              <div id="shippingInfo" class="m-2 w-100 border rounded shadow-sm"></div>
+            </div>
+            <div class="row align-items-center px-2">
+              <h6 class="col-5">Subtotal:</h6>
+              <h3 id="subtotal" class="col font-weight-bold text-right"></h3>
+            </div>
+            <div class="row align-items-center px-2">
+              <h6 class="col-5">Costo de envío (<span id="shippingPriceInfo" class="text-pink">-</span>):</h6>
+              <h3 id="shippingPrice" class="col font-weight-bold text-right">-</h3>
+            </div>
+            <hr>
+            <div class="row align-items-end px-2">
+              <h5 class="col-5">Total:</h5>
+              <h2 id="total" class="col font-weight-bold text-right">-</h2>
+            </div>
+            <div class="row p-2 align-self-end">
+
+              <!-- Confirm the buy -->
+              <button type="button" id="confirmBuyBtn" class="btn btn-primary w-100 my-2" disabled>
+                Confirmar compra
+              </button>
+              <div class="row align-items-center mx-0" id="buyBtnInfo">
+                <p class="col mb-0 pl-1 text-center text-danger" style="font-size: 0.9em;">Ingrese dirección y tipo de
+                  envío para confirmar la compra</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <!-- Modal shipping-->
+    <div class="modal fade" id="shippingSelectModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title font-weight-bold" id="exampleModalLongTitle">Elija el tipo de envío</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group d-flex row w-100 px-3 align-items-center">
+              <label for="shippingAddressStreet" class="col-3 mb-0">Calle: </label>
+              <input type="text" name="shippingAddressStreet" id="shippingAddressStreet" class="col form-control">
+            </div>
+            <div class="form-group d-flex row w-100 px-3 align-items-center">
+              <label for="shippingAddressNumber" class="col-3 mb-0">Número: </label>
+              <input type="text" name="shippingAddressNumber" id="shippingAddressNumber" class="col form-control">
+            </div>
+            <div class="form-group d-flex row w-100 px-3 align-items-center">
+              <label for="shippingAddressCorner" class="col-3 mb-0">Esquina: </label>
+              <input type="text" name="shippingAddressCorner" id="shippingAddressCorner" class="col form-control">
+            </div>
+
+            <div class="form-group border rounded shadow-sm m-4 p-4">
+              <h4>Tipo de envío</h4>
+              <input type="radio" id="premium" name="shippingType" value="15">
+              <label for="premium" class="px-2" style="font-size: 1.3em;">
+                Premium (2-5 días) <span class="text-pink">+15%</span>
+              </label>
+              <br>
+              <input type="radio" id="express" name="shippingType" value="7">
+              <label for="express" class="px-2" style="font-size: 1.3em;">
+                Express (5-8 días) <span class="text-pink">+7%</span>
+              </label>
+              <br>
+              <input type="radio" id="standard" name="shippingType" value="5">
+              <label for="standard" class="px-2" style="font-size: 1.3em;">
+                Standard (12-15 días) <span class="text-pink">+5%</span>
+              </label>
+            </div>
+            <p id="shippingOptionsInfo"class="text-center text-danger"></p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary"
+              onclick="applyShippingType()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
