@@ -3,79 +3,107 @@ let cartArticles = [];
 //Shows the articles in the cart
 function showArticles(articlesArray) {
   let content = "";
-  let cartArticlesDiv = document.getElementById("cartArticles");
+  if (articlesArray.length > 0) {
 
-  for (let i = 0; i < articlesArray.length; i++) {
-    let article = articlesArray[i];
+    let cartArticlesDiv = document.getElementById("cartArticles");
 
-    let totalArticlePrice = article.unitCost * article.count;
+    for (let i = 0; i < articlesArray.length; i++) {
+      let article = articlesArray[i];
 
-    if (article.currency === "USD") {
-      totalArticlePrice *= 40;
-    }
+      let totalArticlePrice = article.unitCost * article.count;
 
-    content += `
-        <div id="cartArticle${i}" class="d-flex row mx-0 py-2 border-bottom">
-              <div class="col-12 col-lg-6 p-2">
-                <div class="d-flex row h-100 align-items-center mx-0">
-                  <div class="col-4 px-0">
-                    <img src="${article.src}" alt="${article.name}" class="img-thumbnail">
-                  </div>
-                  <div class="col">
-                    <div class="row mx-0 h-100">
-                      <div class="col py-2">
-                        <h4 class="w-100 mb-0 text-center font-weight-light">${article.name}</h4>
+      if (article.currency === "USD") {
+        totalArticlePrice *= 40;
+      }
+
+      content += `
+            <div id="cartArticle${i}" class="d-flex row mx-0 py-3 border-bottom">
+              <div class="d-flex row h-100 align-items-center">
+                <div class="col-12 col-lg-5">
+
+                <div class="d-flex row justify-content-center p-3">
+                  <img src="${article.src}" alt="${article.name}" class="img-thumbnail w-50">
+                </div>
+                <div class="d-flex row">
+                  <h5 class="w-100 mb-0 text-center font-weight-light" id="articleName${i}">${article.name}</h5>
+                </div>
+                <!--
+                  <div class="d-flex row align-items-center mx-0">
+                    <div class="col-5 px-0">
+                      <img src="${article.src}" alt="${article.name}" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                      <div class="row mx-0 h-100">
+                        <div class="col py-2 px-0">
+                          <h4 class="w-100 mb-0 text-center font-weight-light" id="articleName${i}">${article.name}</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  -->
                 </div>
-              </div>
-
-              <div class="col p-2 border rounded m-2">
-                <div class="row mx-0 px-2 h-100 d-flex align-items-center">
-                  <div class="col py-1 px-0">
-                    <div class="d-flex row align-items-center mx-0">
-                      <h6 class="col-4 mb-0 pl-1">Precio: </h6>
-                      <h4 class="col mb-0 px-0 text-right">${convertCurrencySign(article.currency)} <span id="article${i}Price">${article.unitCost.toLocaleString('es-UY')}</span></h4>
-                    </div>
-                  </div>
-                  <div class="w-100"></div>
-                  <div class="col py-1 px-0">
-                    <div class="d-flex row align-items-center mx-0">
-                      <h6 class="col-4 mb-0 pl-1">Cantidad: </h6>
-                      <input type="number" min="1" max="1000000" value="${article.count}" id="article${i}Quantity" class="col-8 form-control h-100" onchange="changeArticleTotal(${i}, '${article.currency}')">
-                    </div>
-                  </div>
-                  <div class="w-100"></div>
-                  <div class="col py-1 px-0">
-                    <div class="d-flex row align-items-center mx-0">
-                      <h6 class="col-4 mb-0 pl-1">Total: </h6>
-                      <h4 class="col mb-0 px-0 font-weight-bold text-right"><span id="article${i}TotalPrice" class="articleTotal">${priceFromNumber(totalArticlePrice)}</span></h4>
-                    </div>
-                  </div>
-                  <div class="w-100"></div>
-                  `;
-
-    if (article.currency === "USD") {
-      content += `
+  
+                <div class="col">
+                  <div class="row mx-0 px-3 py-2 h-100 d-flex align-items-center border rounded">
                     <div class="col py-1 px-0">
                       <div class="d-flex row align-items-center mx-0">
-                        <p class="col mb-0 pl-1 text-center text-danger" style="font-size: 0.9em;">Se utiliza un valor del dólar de $40</p>
+                        <h6 class="col-4 mb-0 pl-1">Precio: </h6>
+                        <h4 class="col mb-0 px-0 text-right">${convertCurrencySign(article.currency)} <span id="article${i}Price">${article.unitCost.toLocaleString('es-UY')}</span></h4>
                       </div>
-                    `
-        ;
-    }
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col py-1 px-0">
+                      <div class="d-flex row align-items-center mx-0">
+                        <h6 class="col-4 mb-0 pl-1">Cantidad: </h6>
+                        <input type="number" min="1" max="1000000" value="${article.count}" id="article${i}Quantity" class="col-8 form-control h-100" onchange="changeArticleTotal(${i}, '${article.currency}')">
+                      </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col py-1 px-0">
+                      <div class="d-flex row align-items-center mx-0">
+                        <h6 class="col-4 mb-0 pl-1">Total: </h6>
+                        <h4 class="col mb-0 px-0 font-weight-bold text-right"><span id="article${i}TotalPrice" class="articleTotal">${priceFromNumber(totalArticlePrice)}</span></h4>
+                      </div>
+                    </div>
+                    <div class="w-100"></div>
+                    `;
 
-    content += `
+      if (article.currency === "USD") {
+        content += `
+                    <div class="col py-1 px-0">
+                      <div class="d-flex row align-items-center mx-0">
+                        <p class="col mb-0 pl-1 rounded bg-light-pink text-center text-danger" style="font-size: 0.9em;">Se utiliza un valor del dólar de $40</p>
+                      </div>
+                    </div>
+                    `;
+      }
+
+      content += `
+                      
+                  </div>
+                  <div class="w-100"></div>
+                  <div class="col my-3 p-0">
+                    <button class="btn btn-sm btn-block btn-danger" onclick="removeArticle(${i})"><span class="fas fa-trash-alt"></span> | Quitar articulo</button>
                   </div>
                 </div>
               </div>
             </div>
-        `;
-  }
-  cartArticlesDiv.innerHTML = content;
+          `;
+    }
+    cartArticlesDiv.innerHTML = content;
 
-  calcSubtotal();
+    calcSubtotal();
+  }
+  else {
+    //Puts a message indicating there is no articles in the cart
+    content += `
+          <div class="">
+            No cuentas con ningún articulo en tu carrito, puedes encontrar lo que quieras <a class="alert-link" href="products.html">aquí.</a>
+          </div>
+    `;
+
+    document.getElementById("divCarrito").innerHTML = content;
+  }
 }
 
 //Change the total price of an article when the quantity change
@@ -85,7 +113,10 @@ function changeArticleTotal(articleIdNumber, currency) {
   let articleQuantity = document.getElementById(`article${articleIdNumber}Quantity`);
   let articleTotalPrice = document.getElementById(`article${articleIdNumber}TotalPrice`);
 
-  //Checks for the max quantity
+  //Checks if the quantity is correct
+  if (articleQuantity.value === "") {
+    articleQuantity.value = articleQuantity.min;
+  }
   if (parseInt(articleQuantity.value) > articleQuantity.max) {
     articleQuantity.value = articleQuantity.max;
   }
@@ -93,6 +124,7 @@ function changeArticleTotal(articleIdNumber, currency) {
     articleQuantity.value = articleQuantity.min;
   }
   articleQuantity = parseInt(articleQuantity.value);
+
 
   let total = articlePrice * articleQuantity;
 
@@ -126,10 +158,8 @@ function calcSubtotal() {
 
 //Calcs the shipping price based on the subtotal and the shipping type
 function calcShippingPrice() {
-  let subtotal = document.getElementById("subtotal").innerHTML;
-  subtotal = numberFromText(subtotal);
-  let shippingTypeNumber = document.getElementById("shippingPriceInfo").innerHTML;
-  shippingTypeNumber = numberFromText(shippingTypeNumber);
+  let subtotal = numberFromText(document.getElementById("subtotal").innerHTML);
+  let shippingTypeNumber = getShippingType();
 
   if (shippingTypeNumber != null) {
     let shippingCost = (shippingTypeNumber * subtotal) / 100;
@@ -142,24 +172,43 @@ function calcShippingPrice() {
 //Calculate the total price and show value in the page
 function calcTotal() {
   //Gets the values needed
-  let subtotal = document.getElementById("subtotal").innerHTML;
-  subtotal = numberFromText(subtotal);
-  let shippingPrice = document.getElementById("shippingPrice").innerHTML;
-  shippingPrice = numberFromText(shippingPrice);
+  let subtotal = numberFromText(document.getElementById("subtotal").innerHTML);
+  let shippingPrice = numberFromText(document.getElementById("shippingPrice").innerHTML);
 
   let total = subtotal + shippingPrice;
   total = priceFromNumber(total);
-
   document.getElementById("total").innerHTML = total;
 }
 
-//Applies the selected shipping type and sets the total price
-function applyShippingType() {
+//Applies the selected shipping address
+function applyShippingAddress() {
   //Gets the input fields
   let shippingAddressStreet = document.getElementById("shippingAddressStreet");
   let shippingAddressNumber = document.getElementById("shippingAddressNumber");
   let shippingAddressCorner = document.getElementById("shippingAddressCorner");
   let shippingCountry = document.getElementById("shippingCountry");
+
+
+  $('#shippingTypeModal').modal('hide'); //Hide modal
+
+  //Shows the info enter by the user
+  let shippingInfoContent = `
+    <div class="row align-items-center mx-0 border rounded">
+      <p class="m-0 p-2" style="font-size: 0.9em;">
+        <span class="font-weight-bold">Dirección del envío: </span>
+        ${shippingAddressStreet.value} ${shippingAddressNumber.value}, esquina ${shippingAddressCorner.value}. ${shippingCountry.value}.
+      </p>
+    </div>
+    `;
+  document.getElementById("shippingInfo").innerHTML = shippingInfoContent;
+
+  //Activate the confirm buy button
+  document.getElementById("confirmBuyBtn").disabled = false;
+
+}
+
+//Gets the selected shipping type and return its value
+function getShippingType() {
   let shippingType = document.getElementsByName("shippingType");
   let shippingValue = 0;
   for (let i = 0; i < shippingType.length; i++) {
@@ -167,30 +216,23 @@ function applyShippingType() {
       shippingValue = parseInt(shippingType[i].value);
     }
   }
+  return shippingValue;
+}
 
-  $('#shippingTypeModal').modal('hide'); //Hide modal
+//Removes the article from the list
+function removeArticle(id) {
+  let articleName = document.getElementById("articleName" + id).innerHTML;
 
-  //Shows the info enter by the user
-  let shippingInfoContent = `
-      <p class="m-0 p-2" style="font-size: 0.9em;">
-        <span class="font-weight-bold">Dirección</span>: ${shippingAddressStreet.value} ${shippingAddressNumber.value}, esquina ${shippingAddressCorner.value}. ${shippingCountry.value}.
-        <br>
-        <span class="font-weight-bold">Método de envío</span>: Premium(<span class="text-pink">+${shippingValue}%</span>)
-      </p>
-    `;
-  document.getElementById("shippingInfo").innerHTML = shippingInfoContent;
-  document.getElementById("shippingPriceInfo").innerHTML = `+${shippingValue}%`;
+  //Search for the name in the array
+  for (let i = 0; i < cartArticles.length; i++) {
+    if (cartArticles[i].name === articleName) {
+      cartArticles.splice(i, 1);
+      break;
+    }
+  }
 
-  //Calculates subtotal and shipping cost and show them on the page
-  let subtotal = document.getElementById("subtotal").innerHTML;
-  subtotal = numberFromText(subtotal);
-  let shippingCost = (shippingValue * subtotal) / 100;
-  document.getElementById("shippingPrice").innerHTML = priceFromNumber(shippingCost);
-  //Activate the confirm buy button
-  document.getElementById("buyBtnInfo").classList.add("d-none");
-  document.getElementById("confirmBuyBtn").disabled = false;
+  showArticles(cartArticles);
 
-  calcTotal();
 }
 
 //Remove the dots and the signs return a clean number (int)
@@ -203,7 +245,6 @@ function numberFromText(price) {
   else {
     return null;
   }
-
 }
 
 //Return a number as a price in pesos uruguayos
@@ -236,10 +277,18 @@ document.addEventListener("DOMContentLoaded", function (e) {
     else {
       event.preventDefault();
       event.stopPropagation();
-      applyShippingType();
+      applyShippingAddress();
     }
     shippingForm.classList.add("was-validated");
   });
+
+  let shippingTypeBtns = document.getElementsByName("shippingType");
+
+  for (let i = 0; i < shippingTypeBtns.length; i++) {
+    shippingTypeBtns[i].addEventListener('click', function () {
+      calcShippingPrice();
+    });
+  }
 
 
 });

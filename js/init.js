@@ -71,11 +71,11 @@ function loadLogInDiv(userLoggedIn) {
                 aria-haspopup="true" aria-expanded="false">
                 <span class="font-weight-bold">${userName}</span>
               </a>
-              <div class="w-100 dropdown-menu dropdown-menu-right bg-light-pink text-center text-lg-left" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item text-pink" href="cart.html">Mi carrito</a>
-                <a class="dropdown-item text-pink" href="my-profile.html">Perfil</a>
+              <div class="dropdown-menu dropdown-menu-right bg-light-pink text-center text-lg-left" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-pink px-3" href="cart.html"><i class="fas fa-shopping-cart text-center" style="width:28px"></i> Mi carrito</a>
+                <a class="dropdown-item text-pink px-3" href="my-profile.html"><i class="fas fa-user text-center" style="width:28px"></i> Perfil</a>
                 <div class="dropdown-divider" style="border-color: #f1cdd3;"></div>
-                <button class="dropdown-item text-pink" onclick="onSignOut()">Cerrar sesión</button>
+                <button class="dropdown-item text-pink px-3" onclick="onSignOut()"><i class="fas fa-times text-center" style="width:28px"></i> Cerrar sesión</button>
               </div>
       `;
     }
