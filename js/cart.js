@@ -21,13 +21,13 @@ function showArticles(articlesArray) {
               <div class="d-flex row h-100 align-items-center">
                 <div class="col-12 col-lg-5">
 
-                <div class="d-flex row justify-content-center p-3">
+                <div class="d-flex row justify-content-center m-2">
                   <img src="${article.src}" alt="${article.name}" class="img-thumbnail w-50">
                 </div>
-                <div class="d-flex row">
+                <div class="d-flex row my-3">
                   <h5 class="w-100 mb-0 text-center font-weight-light" id="articleName${i}">${article.name}</h5>
                 </div>
-                <!--
+                <!-- With the image on the left and text on the right
                   <div class="d-flex row align-items-center mx-0">
                     <div class="col-5 px-0">
                       <img src="${article.src}" alt="${article.name}" class="img-thumbnail">
@@ -97,8 +97,8 @@ function showArticles(articlesArray) {
   else {
     //Puts a message indicating there is no articles in the cart
     content += `
-          <div class="">
-            No cuentas con ningún articulo en tu carrito, puedes encontrar lo que quieras <a class="alert-link" href="products.html">aquí.</a>
+          <div class="alert-warning p-3 border border-warning rounded" role="alert">
+            No cuentas con ningún articulo en tu carrito, puedes encontrar lo que quieras <a class="alert-link" href="products.html">haciendo click aquí.</a>
           </div>
     `;
 
@@ -160,6 +160,7 @@ function calcSubtotal() {
 function calcShippingPrice() {
   let subtotal = numberFromText(document.getElementById("subtotal").innerHTML);
   let shippingTypeNumber = getShippingType();
+  document.getElementById("shippingPriceInfo").innerHTML = "+" + shippingTypeNumber + "%";
 
   if (shippingTypeNumber != null) {
     let shippingCost = (shippingTypeNumber * subtotal) / 100;
@@ -189,22 +190,104 @@ function applyShippingAddress() {
   let shippingCountry = document.getElementById("shippingCountry");
 
 
-  $('#shippingTypeModal').modal('hide'); //Hide modal
+  $('#shippingAddressModal').modal('hide'); //Hide modal
 
   //Shows the info enter by the user
   let shippingInfoContent = `
-    <div class="row align-items-center mx-0 border rounded">
-      <p class="m-0 p-2" style="font-size: 0.9em;">
-        <span class="font-weight-bold">Dirección del envío: </span>
-        ${shippingAddressStreet.value} ${shippingAddressNumber.value}, esquina ${shippingAddressCorner.value}. ${shippingCountry.value}.
-      </p>
-    </div>
+    <p id="shippingAddressConfirmed" class="border rounded m-0 p-2" style="font-size: 0.9em;">
+      <span class="font-weight-bold">Dirección del envío: </span>
+      ${shippingAddressStreet.value} ${shippingAddressNumber.value}, esquina ${shippingAddressCorner.value}. ${shippingCountry.value}.
+    </p>
     `;
   document.getElementById("shippingInfo").innerHTML = shippingInfoContent;
 
-  //Activate the confirm buy button
-  document.getElementById("confirmBuyBtn").disabled = false;
+  //Put the success class in the button
+  document.getElementById("shippingAddressBtn").classList.remove("btn-info");
+  document.getElementById("shippingAddressBtn").classList.add("btn-success");
+  //Activate the confirm buy button if the payment method is correct
+  if (document.getElementById("paymentMethodConfirmed")) {
+    let confirmBuyBtn = document.getElementById("confirmBuyBtn");
+    confirmBuyBtn.disabled = false
+    confirmBuyBtn.classList.remove("btn-secondary");
+    confirmBuyBtn.classList.add("btn-primary");
+  }
+}
 
+//Change between the payment methods
+function changePaymentMethod() {
+  let paymentMethod = document.getElementsByName("paymentMethod");
+  let creditCardForm = document.getElementById("creditCardForm");
+  let bankTransferForm = document.getElementById("bankTransferForm");
+
+  for (let i = 0; i < paymentMethod.length; i++) {
+    if (paymentMethod[i].checked && paymentMethod[i].value === "1") {
+      creditCardForm.classList.remove("d-none");
+      bankTransferForm.classList.add("d-none");
+    }
+    else if (paymentMethod[i].checked && paymentMethod[i].value === "2") {
+      bankTransferForm.classList.remove("d-none");
+      creditCardForm.classList.add("d-none");
+    }
+  }
+}
+
+//Applies the paymenth method and show the info on the page
+function applyPaymentMethod(method) {
+  if (method === "1") {
+    //Payment credit card
+
+    let paymentInfoContent = `
+    <div id="paymentMethodConfirmed" class="col border rounded p-2" style="font-size: 0.9em;">
+      <p class="m-0">
+        <span class="font-weight-bold">Método de pago: </span>
+        Tarjeta de crédito
+      </p>
+      <p class="m-0">
+        <span class="font-weight-bold">Titular de trajeta: </span>
+        ${document.getElementById("creditCardOwner").value}
+      </p>
+      <p class="m-0">
+        <span class="font-weight-bold">Número de trajeta: </span>
+        ${document.getElementById("creditCardNumber").value}
+      </p>
+    </div>
+    `;
+    document.getElementById("paymentInfo").innerHTML = paymentInfoContent;
+  }
+  else if (method === "2") {
+    //Payment bank transfer
+
+    let paymentInfoContent = `
+    <div id="paymentMethodConfirmed" class="col border rounded p-2" style="font-size: 0.9em;">
+      <p class="m-0">
+        <span class="font-weight-bold">Método de pago: </span>
+        Transferencia bancaria.
+      </p>
+      <p class="m-0">
+        <span class="font-weight-bold">Banco: </span>
+        ${document.getElementById("bankName").value}
+      </p>
+      <p class="m-0">
+        <span class="font-weight-bold">Número de cuenta: </span>
+        ${document.getElementById("bankAccountNumber").value}
+      </p class="m-0">
+    </div>
+    `;
+    document.getElementById("paymentInfo").innerHTML = paymentInfoContent;
+  }
+
+  $('#paymentMethodModal').modal('hide'); //Hide modal
+
+  //Put the success class in the button
+  document.getElementById("paymentMethodBtn").classList.remove("btn-info");
+  document.getElementById("paymentMethodBtn").classList.add("btn-success");
+  //Activate the confirm buy button if the shipping address is correct
+  if (document.getElementById("shippingAddressConfirmed")) {
+    let confirmBuyBtn = document.getElementById("confirmBuyBtn");
+    confirmBuyBtn.disabled = false
+    confirmBuyBtn.classList.remove("btn-secondary");
+    confirmBuyBtn.classList.add("btn-primary");
+  }
 }
 
 //Gets the selected shipping type and return its value
@@ -222,7 +305,6 @@ function getShippingType() {
 //Removes the article from the list
 function removeArticle(id) {
   let articleName = document.getElementById("articleName" + id).innerHTML;
-
   //Search for the name in the array
   for (let i = 0; i < cartArticles.length; i++) {
     if (cartArticles[i].name === articleName) {
@@ -230,9 +312,7 @@ function removeArticle(id) {
       break;
     }
   }
-
   showArticles(cartArticles);
-
 }
 
 //Remove the dots and the signs return a clean number (int)
@@ -253,7 +333,6 @@ function priceFromNumber(number) {
   return price;
 }
 
-
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -267,26 +346,57 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
   });
 
-  let shippingForm = document.getElementById("shippingTypeForm");
+  //Manage the validation in the address form
+  let shippingForm = document.getElementById("shippingAddressForm");
 
   shippingForm.addEventListener('submit', function (event) {
-    if (shippingForm.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else {
-      event.preventDefault();
-      event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
+    if (shippingForm.checkValidity() === true) {
       applyShippingAddress();
     }
     shippingForm.classList.add("was-validated");
   });
 
+  //Manage the validation in the payment method form
+  let creditCardForm = document.getElementById("creditCardForm");
+
+  creditCardForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (creditCardForm.checkValidity() === true) {
+      applyPaymentMethod("1");
+    }
+    creditCardForm.classList.add("was-validated");
+  });
+
+  //Manage the validation in the payment method form
+  let bankTransferForm = document.getElementById("bankTransferForm");
+
+  bankTransferForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (bankTransferForm.checkValidity() === true) {
+      applyPaymentMethod("2");
+    }
+    bankTransferForm.classList.add("was-validated");
+  });
+
+  //Manage the change in the shipping type
   let shippingTypeBtns = document.getElementsByName("shippingType");
 
   for (let i = 0; i < shippingTypeBtns.length; i++) {
-    shippingTypeBtns[i].addEventListener('click', function () {
+    shippingTypeBtns[i].addEventListener('change', function () {
       calcShippingPrice();
+    });
+  }
+
+  //Manage the change in the payment method
+  let paymentMethodBtns = document.getElementsByName("paymentMethod");
+
+  for (let i = 0; i < paymentMethodBtns.length; i++) {
+    paymentMethodBtns[i].addEventListener('change', function () {
+      changePaymentMethod();
     });
   }
 

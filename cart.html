@@ -77,9 +77,7 @@
   </nav>
 
   <div class="container px-4 py-4 my-3 border rounded shadow">
-    <div class="text-center p-3">
-      <h2 class="font-weight-bold">Mi Carrito</h2>
-    </div>
+    
 
     <!--Here is the info of the cart, the products and the price-->
     <div id="divCarrito" class="p-3">
@@ -88,6 +86,9 @@
 
         <!-- Items in the cart -->
         <div class="col-12 col-lg-7 mr-lg-4 p-0">
+          <div class="text-center p-4">
+            <h2 class="font-weight-bold">Artículos del Carrito</h2>
+          </div>
           <div id="cartArticles" class="border rounded shadow-sm py-2 px-4"></div>
         </div>
 
@@ -96,9 +97,9 @@
           <div class="border rounded shadow p-4">
             <!-- Shipping type selector-->
             <div class="row align-items-center px-2">
-              <div class="form-group border w-100 rounded shadow-sm p-4">
-                <h5 class="font-weight-bold">Tipo de envío:</h5>
-                <div class="p-2">
+              <div class="form-group border w-100 rounded shadow-sm p-3">
+                <h5 class="font-weight-bold m-2 mb-4">Tipo de envío:</h5>
+                <div class="px-4">
                   <div class="custom-control custom-radio my-2">
                     <input type="radio" id="standard" name="shippingType" class="custom-control-input" value="5"
                       checked>
@@ -125,7 +126,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!--Costs-->
             <div class="row">
               <div class="col">
@@ -147,23 +148,45 @@
                 </div>
               </div>
             </div>
+            <hr>
 
             <div class="row p-2">
-              <!-- Button for selecting shipping method -->
-              <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#shippingTypeModal">
-                Opciones de envío
-              </button>
-              <!-- Here is the shipping info -->
-              <div id="shippingInfo" class="my-3">
-                <div class="row align-items-center mx-0 p-2 rounded bg-light-pink">
-                  <p class="col mb-0 pl-1 text-center text-danger" style="font-size: 0.9em;">Ingrese la dirección del
-                    envío para poder confirmar la compra</p>
+              <div class="col">
+                <!-- Button for selecting shipping method -->
+                <div class="row">
+                  <button type="button" id="shippingAddressBtn" class="btn btn-block btn-info" data-toggle="modal"
+                    data-target="#shippingAddressModal">
+                    Opciones de envío
+                  </button>
+                </div>
+                <!-- Here is the shipping info -->
+                <div id="shippingInfo" class="row mt-3">
+                  <p class="w-100 p-2 m-0 text-center text-danger bg-light-pink" style="font-size: 0.9em;">
+                    Ingrese la dirección del envío
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Select the payment method -->
+            <div class="row p-2">
+              <div class="col">
+                <div class="row">
+                  <button type="button" id="paymentMethodBtn" class="btn btn-block btn-info" data-toggle="modal"
+                    data-target="#paymentMethodModal">
+                    Método de pago
+                  </button>
+                </div>
+                <!-- Here is the payment info -->
+                <div id="paymentInfo" class="row mt-3">
+                  <p class="w-100 p-2 m-0 text-center text-danger bg-light-pink" style="font-size: 0.9em;">
+                    Ingrese el método de pago
+                  </p>
                 </div>
               </div>
             </div>
             <!-- Confirm the buy -->
             <div class="row p-2 align-self-end">
-              <button type="button" id="confirmBuyBtn" class="btn btn-block btn-success" disabled>
+              <button type="button" id="confirmBuyBtn" class="btn btn-block btn-lg btn-secondary" disabled>
                 Confirmar compra
               </button>
             </div>
@@ -172,21 +195,20 @@
       </div>
     </div>
 
-    <!-- Modal shipping-->
-    <div class="modal fade" id="shippingTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
+    <!-- Modal shipping address -->
+    <div class="modal fade" id="shippingAddressModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title font-weight-bold" id="exampleModalLongTitle">Elija el tipo de envío</h4>
+            <h4 class="modal-title font-weight-bold">Ingrese la dirección del envío</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-
-            <form id="shippingTypeForm" class="needs-validation" novalidate>
-              <div class="form-group row w-100 px-3 align-items-center">
+            <form id="shippingAddressForm" novalidate>
+              <div class="form-group row px-4 align-items-center">
                 <label for="shippingAddressStreet" class="col-3 mb-0">Calle: </label>
                 <input type="text" name="shippingAddressStreet" id="shippingAddressStreet" class="col-9 form-control"
                   required>
@@ -195,16 +217,16 @@
                   Por favor, ingrese la calle.
                 </div>
               </div>
-              <div class="form-group row w-100 px-3 align-items-center">
+              <div class="form-group row px-4 align-items-center">
                 <label for="shippingAddressNumber" class="col-3 mb-0">Número: </label>
-                <input type="text" name="shippingAddressNumber" id="shippingAddressNumber" class="col-9 form-control"
-                  required>
+                <input type="number" min="0" max="1000000" name="shippingAddressNumber" id="shippingAddressNumber"
+                  class="col-9 form-control" required>
                 <div class="col-3"></div>
                 <div class="col invalid-feedback">
                   Por favor, ingrese el número de puerta.
                 </div>
               </div>
-              <div class="form-group row w-100 px-3 align-items-center">
+              <div class="form-group row px-4 align-items-center">
                 <label for="shippingAddressCorner" class="col-3 mb-0">Esquina: </label>
                 <input type="text" name="shippingAddressCorner" id="shippingAddressCorner" class="col-9 form-control"
                   required>
@@ -213,7 +235,7 @@
                   Por favor, ingrese la esquina cercana.
                 </div>
               </div>
-              <div class="form-group row w-100 px-3 align-items-center">
+              <div class="form-group row px-4 align-items-center">
                 <label for="shippingCountry" class="col-3 mb-0">País: </label>
                 <input type="text" name="shippingCountry" id="shippingCountry" class="col-9 form-control" required>
                 <div class="col-3"></div>
@@ -227,9 +249,120 @@
                 <input type="submit" class="btn btn-primary mx-3 " value="Confirmar">
               </div>
             </form>
-
           </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Modal payment method -->
+    <div class="modal fade" id="paymentMethodModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title font-weight-bold">Elija el método de pago</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group p-3">
+              <div class="custom-control custom-radio my-2">
+                <input type="radio" id="creditCard" name="paymentMethod" class="custom-control-input" value="1"
+                checked>
+                <label for="creditCard" class="px-2 custom-control-label">Tarjeta de crédito</label>
+              </div>
+              <div class="custom-control custom-radio my-2">
+                <input type="radio" id="bankTransfer" name="paymentMethod" class="custom-control-input" value="2">
+                <label for="bankTransfer" class="px-2 custom-control-label">Transferencia bancaria</label>
+              </div>
+            </div>
+            
+            <form id="creditCardForm" novalidate>
+              <!-- Credit card form -->
+              <div class="form-group p-3 m-3 border rounded" >
+                <!--Card owner-->
+                <div class="row my-2 align-items-center">
+                  <div class="col-4">
+                    <label for="creditCardOwner" class="mb-0">Nombre del titular: </label>
+                  </div>
+                  <div class="col-8">
+                    <input type="text" name="creditCardOwner" id="creditCardOwner" class="form-control" required>
+                  </div>
+                </div>
+                <!--Card number-->
+                <div class="row my-2 align-items-center">
+                  <div class="col-4">
+                    <label for="creditCardNumber" class="mb-0">Número: </label>
+                  </div>
+                  <div class="col-8">
+                    <input type="number" min="0" name="creditCardNumber" id="creditCardNumber" class="form-control" required>
+                  </div>
+                </div>
+                <!--Card security number-->
+                <div class="row my-2 align-items-center">
+                  <div class="col-4">
+                    <label for="creditCardNumber" class="mb-0">Código de seguridad: </label>
+                  </div>
+                  <div class="col-8">
+                    <input type="number" min="0" name="creditCardNumber" id="creditCardNumber" class="form-control" required>
+                  </div>
+                </div>
+                <!--Card expiration date-->
+                <div class="row my-2 align-items-center">
+                  <div class="col-4">
+                    <label for="creditCardNumber" class="mb-0">Fecha de vencimiento: </label>
+                  </div>
+                  <div class="col-4">
+                    <input type="number" min="1" max="12" name="creditCardExpirationMonth" class="form-control" placeholder="Mes" required>
+                  </div>
+                  <div class="col-4">
+                    <input type="number" min="2020" max="2200" name="creditCardExpirationYear" class="form-control" placeholder="Año" required>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <input type="submit" class="btn btn-primary mx-3 " value="Confirmar">
+                </div>
+              </div>
+            </form>
+
+            <form id="bankTransferForm" novalidate class="d-none">
+              <!-- Bank transfer form -->
+              <div class="form-group p-3 m-3 border rounded" >
+                <!--Bank-->
+                <div class="row my-2 align-items-center">
+                  <div class="col-4">
+                    <label for="bankName" class="mb-0">Banco: </label>
+                  </div>
+                  <div class="col-8">
+                    <select name="bankName" id="bankName" class="form-control">
+                      <option selected>BROU</option>
+                      <option>Santander</option>
+                      <option>Itaú</option>
+                      <option>BBVA</option>
+                      <option>HSBC</option>
+                    </select>
+                  </div>
+                </div>
+                <!--Bank account number-->
+                <div class="row my-2 align-items-center">
+                  <div class="col-4">
+                    <label for="bankAccountNumber" class="mb-0">Número de cuenta: </label>
+                  </div>
+                  <div class="col-8">
+                    <input type="number" min="0" name="bankAccountNumber" id="bankAccountNumber" class="form-control" required>
+                  </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <input type="submit" class="btn btn-primary mx-3 " value="Confirmar">
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
