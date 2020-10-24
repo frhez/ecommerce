@@ -47,21 +47,21 @@ function showArticles(articlesArray) {
                   <div class="row mx-0 px-3 py-2 h-100 d-flex align-items-center border rounded">
                     <div class="col py-1 px-0">
                       <div class="d-flex row align-items-center mx-0">
-                        <h6 class="col-4 mb-0 pl-1">Precio: </h6>
+                        <h6 class="col-3 mb-0 pl-1">Precio: </h6>
                         <h4 class="col mb-0 px-0 text-right">${convertCurrencySign(article.currency)} <span id="article${i}Price">${article.unitCost.toLocaleString('es-UY')}</span></h4>
                       </div>
                     </div>
                     <div class="w-100"></div>
                     <div class="col py-1 px-0">
                       <div class="d-flex row align-items-center mx-0">
-                        <h6 class="col-4 mb-0 pl-1">Cantidad: </h6>
-                        <input type="number" min="1" max="1000000" value="${article.count}" id="article${i}Quantity" class="col-8 form-control h-100" onchange="changeArticleTotal(${i}, '${article.currency}')">
+                        <h6 class="col-5 mb-0 pl-1">Cantidad: </h6>
+                        <input type="number" min="1" max="1000000" value="${article.count}" id="article${i}Quantity" class="col form-control h-100" onchange="changeArticleTotal(${i}, '${article.currency}')">
                       </div>
                     </div>
                     <div class="w-100"></div>
                     <div class="col py-1 px-0">
                       <div class="d-flex row align-items-center mx-0">
-                        <h6 class="col-4 mb-0 pl-1">Total: </h6>
+                        <h6 class="col-3 mb-0 pl-1">Total: </h6>
                         <h4 class="col mb-0 px-0 font-weight-bold text-right"><span id="article${i}TotalPrice" class="articleTotal">${priceFromNumber(totalArticlePrice)}</span></h4>
                       </div>
                     </div>
@@ -204,12 +204,12 @@ function applyShippingAddress() {
   //Put the success class in the button
   document.getElementById("shippingAddressBtn").classList.remove("btn-info");
   document.getElementById("shippingAddressBtn").classList.add("btn-success");
-  //Activate the confirm buy button if the payment method is correct
+  //Activate the confirm purchase button if the payment method is correct
   if (document.getElementById("paymentMethodConfirmed")) {
-    let confirmBuyBtn = document.getElementById("confirmBuyBtn");
-    confirmBuyBtn.disabled = false
-    confirmBuyBtn.classList.remove("btn-secondary");
-    confirmBuyBtn.classList.add("btn-primary");
+    let confirmPurchaseBtn = document.getElementById("confirmPurchaseBtn");
+    confirmPurchaseBtn.disabled = false
+    confirmPurchaseBtn.classList.remove("btn-secondary");
+    confirmPurchaseBtn.classList.add("btn-primary");
   }
 }
 
@@ -281,13 +281,119 @@ function applyPaymentMethod(method) {
   //Put the success class in the button
   document.getElementById("paymentMethodBtn").classList.remove("btn-info");
   document.getElementById("paymentMethodBtn").classList.add("btn-success");
-  //Activate the confirm buy button if the shipping address is correct
+  //Activate the confirm purchase button if the shipping address is correct
   if (document.getElementById("shippingAddressConfirmed")) {
-    let confirmBuyBtn = document.getElementById("confirmBuyBtn");
-    confirmBuyBtn.disabled = false
-    confirmBuyBtn.classList.remove("btn-secondary");
-    confirmBuyBtn.classList.add("btn-primary");
+    let confirmPurchaseBtn = document.getElementById("confirmPurchaseBtn");
+    confirmPurchaseBtn.disabled = false
+    confirmPurchaseBtn.classList.remove("btn-secondary");
+    confirmPurchaseBtn.classList.add("btn-primary");
   }
+}
+
+//Show all the info of the purchase
+function confirmPurchaseInfo() {
+  //Article data
+  let articleContent = `
+  <div class="row">
+    <div class="col font-weight-bold">Nombre</div>
+    <div class="col-2 font-weight-bold d-none d-md-block">Precio</div>
+    <div class="col-2 font-weight-bold d-none d-md-block">Cant.</div>
+    <div class="col font-weight-bold text-right">Total</div>
+  </div>
+  <hr>
+  `;
+  for (let i = 0; i < cartArticles.length; i++) {
+    let article = cartArticles[i];
+    articleContent += `
+    <div class="row">
+      <div class="col">${article.name}</div>
+      <div class="col-2 d-none d-md-block">${convertCurrencySign(article.currency)} ${article.unitCost.toLocaleString('es-UY')}</div>
+      <div class="col-2 d-none d-md-block">${document.getElementById(`article${i}Quantity`).value}</div>
+      <div class="col text-right">${document.getElementById(`article${i}TotalPrice`).innerHTML}</div>
+    </div>
+    `;
+    if (i < cartArticles.length - 1) {
+      articleContent += "<hr>";
+    }
+  }
+  document.getElementById("confirmPurchaseArticles").innerHTML = articleContent;
+
+  //Shipping data
+  let shippingType = getShippingType();
+  let shippingTypeInfo = "";
+  switch (shippingType) {
+    case 5:
+      {
+        shippingTypeInfo = "Standard (LLegada del envío entre 12-15 días)";
+      }
+      break;
+    case 7:
+      {
+        shippingTypeInfo = "Express (LLegada del envío entre 5-8 días)";
+      }
+      break;
+    case 15:
+      {
+        shippingTypeInfo = "Premium (LLegada del envío entre 2-5 días)";
+      }
+      break;
+  }
+  let shippingDataContent = "";
+  shippingDataContent += `
+  <div class="row">
+    <div class="col">
+      <p><span class="font-weight-bold">Tipo: </span>
+      ${shippingTypeInfo}
+      </p>
+    </div>
+  </div>
+  `;
+
+  let shippingAddress = document.getElementById("shippingAddressConfirmed").innerHTML;
+  shippingDataContent += `
+  <div class="row">
+    <div class="col">
+      ${shippingAddress}
+    </div>
+  </div>
+  `;
+  document.getElementById("confirmPurchaseShippingData").innerHTML = shippingDataContent;
+
+  //Costs info
+  let costsContent = "";
+  costsContent += `
+  <div class="row align-items-end">
+    <div class="col text-left font-weight-bold">Subtotal</div>
+    <div class="col text-right">${document.getElementById("subtotal").innerHTML}</div>
+  </div>
+  <div class="row align-items-end">
+    <div class="col text-left font-weight-bold">Envío</div>
+    <div class="col text-right">${document.getElementById("shippingPrice").innerHTML}</div>
+  </div>
+  <div class="row align-items-end">
+    <div class="col text-left font-weight-bold">Total</div>
+    <div class="col text-right">${document.getElementById("total").innerHTML}</div>
+  </div>
+  `;
+  document.getElementById("confirmPurchaseCosts").innerHTML = costsContent;
+
+  //Payment data
+  let paymentData = document.getElementById("paymentMethodConfirmed").innerHTML;
+  let paymentDataContent = paymentData;
+  document.getElementById("confirmPurchasePaymentData").innerHTML = paymentDataContent;
+}
+
+//Confirm the purchase and show a message
+function confirmPurchase() {
+  $('#confirmPurchaseModal').modal('hide'); //Hide modal
+  let content = `
+  <div class="alert-success p-3 border border-success rounded" role="alert">
+    <h5>La compra ha sido realizada con éxito!</h5>
+    <h5>Descubre nuevos y fascinantes artículos <a class="alert-link" href="products.html">haciendo click aquí.</a></h5>
+  </div>
+  `;
+
+  document.getElementById("divCarrito").innerHTML = content;
 }
 
 //Gets the selected shipping type and return its value
@@ -298,6 +404,11 @@ function getShippingType() {
     if (shippingType[i].checked) {
       shippingValue = parseInt(shippingType[i].value);
     }
+  }
+  //Check if the value is correct
+  if (shippingValue === 0) {
+    shippingType[0].checked = true;
+    shippingValue = parseInt(shippingType[0].value);
   }
   return shippingValue;
 }
@@ -337,68 +448,78 @@ function priceFromNumber(number) {
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
-  document.getElementById("confirmBuyBtn").disabled = true;
 
-  getJSONData(CART_INFO_URL).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      cartArticles = resultObj.data.articles;
-      showArticles(cartArticles);
-    }
-  });
+  //Checks for user logged
+  if (localStorage.getItem('userName')) {
+    document.getElementById("confirmPurchaseBtn").disabled = true;
 
-  //Manage the validation in the address form
-  let shippingForm = document.getElementById("shippingAddressForm");
-
-  shippingForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (shippingForm.checkValidity() === true) {
-      applyShippingAddress();
-    }
-    shippingForm.classList.add("was-validated");
-  });
-
-  //Manage the validation in the payment method form
-  let creditCardForm = document.getElementById("creditCardForm");
-
-  creditCardForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (creditCardForm.checkValidity() === true) {
-      applyPaymentMethod("1");
-    }
-    creditCardForm.classList.add("was-validated");
-  });
-
-  //Manage the validation in the payment method form
-  let bankTransferForm = document.getElementById("bankTransferForm");
-
-  bankTransferForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (bankTransferForm.checkValidity() === true) {
-      applyPaymentMethod("2");
-    }
-    bankTransferForm.classList.add("was-validated");
-  });
-
-  //Manage the change in the shipping type
-  let shippingTypeBtns = document.getElementsByName("shippingType");
-
-  for (let i = 0; i < shippingTypeBtns.length; i++) {
-    shippingTypeBtns[i].addEventListener('change', function () {
-      calcShippingPrice();
+    getJSONData(CART_INFO_URL).then(function (resultObj) {
+      if (resultObj.status === "ok") {
+        cartArticles = resultObj.data.articles;
+        showArticles(cartArticles);
+      }
     });
-  }
 
-  //Manage the change in the payment method
-  let paymentMethodBtns = document.getElementsByName("paymentMethod");
+    //Manage the validation in the address form
+    let shippingForm = document.getElementById("shippingAddressForm");
 
-  for (let i = 0; i < paymentMethodBtns.length; i++) {
-    paymentMethodBtns[i].addEventListener('change', function () {
-      changePaymentMethod();
+    shippingForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (shippingForm.checkValidity() === true) {
+        applyShippingAddress();
+      }
+      shippingForm.classList.add("was-validated");
     });
+
+    //Manage the validation in the payment method form
+    let creditCardForm = document.getElementById("creditCardForm");
+
+    creditCardForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (creditCardForm.checkValidity() === true) {
+        applyPaymentMethod("1");
+      }
+      creditCardForm.classList.add("was-validated");
+    });
+
+    //Manage the validation in the payment method form
+    let bankTransferForm = document.getElementById("bankTransferForm");
+
+    bankTransferForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (bankTransferForm.checkValidity() === true) {
+        applyPaymentMethod("2");
+      }
+      bankTransferForm.classList.add("was-validated");
+    });
+
+    //Manage the change in the shipping type
+    let shippingTypeBtns = document.getElementsByName("shippingType");
+
+    for (let i = 0; i < shippingTypeBtns.length; i++) {
+      shippingTypeBtns[i].addEventListener('change', function () {
+        calcShippingPrice();
+      });
+    }
+
+    //Manage the change in the payment method
+    let paymentMethodBtns = document.getElementsByName("paymentMethod");
+
+    for (let i = 0; i < paymentMethodBtns.length; i++) {
+      paymentMethodBtns[i].addEventListener('change', function () {
+        changePaymentMethod();
+      });
+    }
   }
-
-
+  else {
+    let content = `
+    <div class="alert-info p-3 border border-info rounded" role="alert">
+      <h5>Ups! Parece que no has iniciado sesión puedes hacerlo <a class="alert-link" href="index.html">haciendo click aquí.</a></h5>
+    </div>
+    `;
+    document.getElementById("divCarrito").innerHTML = content;
+  }
 });

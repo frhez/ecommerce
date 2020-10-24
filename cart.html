@@ -12,22 +12,6 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
@@ -76,8 +60,8 @@
     </div>
   </nav>
 
-  <div class="container px-4 py-4 my-3 border rounded shadow">
-    
+  <div class="container px-0 px-lg-4 py-0 py-lg-4 my-0 my-lg-3 border rounded shadow">
+
 
     <!--Here is the info of the cart, the products and the price-->
     <div id="divCarrito" class="p-3">
@@ -85,21 +69,21 @@
       <div class="row">
 
         <!-- Items in the cart -->
-        <div class="col-12 col-lg-7 mr-lg-4 p-0">
-          <div class="text-center p-4">
+        <div class="col-12 col-lg-7 mr-lg-3 p-0">
+          <div class="text-center pb-4 pt-1">
             <h2 class="font-weight-bold">Artículos del Carrito</h2>
           </div>
-          <div id="cartArticles" class="border rounded shadow-sm py-2 px-4"></div>
+          <div id="cartArticles" class="border rounded shadow-sm py-2 px-2 px-lg-4"></div>
         </div>
 
         <!-- Subtotal and total price -->
-        <div class="col ml-lg-4 my-3 my-lg-0 px-0">
-          <div class="border rounded shadow p-4">
+        <div class="col ml-lg-3 my-3 my-lg-0 px-0">
+          <div class="border rounded shadow p-3 p-lg-4">
             <!-- Shipping type selector-->
             <div class="row align-items-center px-2">
               <div class="form-group border w-100 rounded shadow-sm p-3">
                 <h5 class="font-weight-bold m-2 mb-4">Tipo de envío:</h5>
-                <div class="px-4">
+                <div class="px-2 px-lg-4">
                   <div class="custom-control custom-radio my-2">
                     <input type="radio" id="standard" name="shippingType" class="custom-control-input" value="5"
                       checked>
@@ -133,18 +117,18 @@
                 <!--Subtotal-->
                 <div class="row align-items-center px-2">
                   <h6 class="col-4">Subtotal:</h6>
-                  <h3 id="subtotal" class="col font-weight-bold text-right"></h3>
+                  <h4 id="subtotal" class="col font-weight-bold text-right"></h4>
                 </div>
                 <!--Shipping cost-->
                 <div class="row align-items-center px-2">
                   <h6 class="col-4">Costo de envío (<span id="shippingPriceInfo" class="text-pink">-</span>):</h6>
-                  <h3 id="shippingPrice" class="col font-weight-bold text-right">-</h3>
+                  <h4 id="shippingPrice" class="col font-weight-bold text-right">-</h4>
                 </div>
                 <hr>
                 <!--Total-->
                 <div class="row align-items-end px-2">
-                  <h5 class="col-4">Total:</h5>
-                  <h2 id="total" class="col font-weight-bold text-right">-</h2>
+                  <h5 class="col-2">Total:</h5>
+                  <h3 id="total" class="col font-weight-bold text-right">-</h3>
                 </div>
               </div>
             </div>
@@ -184,9 +168,11 @@
                 </div>
               </div>
             </div>
-            <!-- Confirm the buy -->
+            <!-- Confirm the purchase -->
             <div class="row p-2 align-self-end">
-              <button type="button" id="confirmBuyBtn" class="btn btn-block btn-lg btn-secondary" disabled>
+              <button type="button" id="confirmPurchaseBtn" onclick="confirmPurchaseInfo()"
+                class="btn btn-block btn-lg btn-secondary" data-toggle="modal"
+                data-target="#confirmPurchaseModal" disabled>
                 Confirmar compra
               </button>
             </div>
@@ -207,40 +193,52 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="shippingAddressForm" novalidate>
-              <div class="form-group row px-4 align-items-center">
-                <label for="shippingAddressStreet" class="col-3 mb-0">Calle: </label>
-                <input type="text" name="shippingAddressStreet" id="shippingAddressStreet" class="col-9 form-control"
-                  required>
-                <div class="col-3"></div>
-                <div class="col invalid-feedback">
-                  Por favor, ingrese la calle.
+            <form id="shippingAddressForm" class="px-2 px-lg-4" novalidate>
+              <div class="form-group row align-items-center">
+                <div class="col-4">
+                  <label for="shippingAddressStreet" class="mb-0">Calle: </label>
+                </div>
+                <div class="col">
+                  <input type="text" name="shippingAddressStreet" id="shippingAddressStreet" class="form-control"
+                    required>
+                  <div class="invalid-feedback">
+                    Por favor, ingrese la calle.
+                  </div>
                 </div>
               </div>
-              <div class="form-group row px-4 align-items-center">
-                <label for="shippingAddressNumber" class="col-3 mb-0">Número: </label>
-                <input type="number" min="0" max="1000000" name="shippingAddressNumber" id="shippingAddressNumber"
-                  class="col-9 form-control" required>
-                <div class="col-3"></div>
-                <div class="col invalid-feedback">
-                  Por favor, ingrese el número de puerta.
+              <div class="form-group row align-items-center">
+                <div class="col-4">
+                  <label for="shippingAddressNumber" class="mb-0">Número: </label>
+                </div>
+                <div class="col">
+                  <input type="number" min="0" max="1000000" name="shippingAddressNumber" id="shippingAddressNumber"
+                    class="form-control" required>
+                  <div class="invalid-feedback">
+                    Por favor, ingrese el número de puerta.
+                  </div>
                 </div>
               </div>
-              <div class="form-group row px-4 align-items-center">
-                <label for="shippingAddressCorner" class="col-3 mb-0">Esquina: </label>
-                <input type="text" name="shippingAddressCorner" id="shippingAddressCorner" class="col-9 form-control"
-                  required>
-                <div class="col-3"></div>
-                <div class="col invalid-feedback">
-                  Por favor, ingrese la esquina cercana.
+              <div class="form-group row align-items-center">
+                <div class="col-4">
+                  <label for="shippingAddressCorner" class="mb-0">Esquina: </label>
+                </div>
+                <div class="col">
+                  <input type="text" name="shippingAddressCorner" id="shippingAddressCorner" class="form-control"
+                    required>
+                  <div class="invalid-feedback">
+                    Por favor, ingrese la esquina cercana.
+                  </div>
                 </div>
               </div>
-              <div class="form-group row px-4 align-items-center">
-                <label for="shippingCountry" class="col-3 mb-0">País: </label>
-                <input type="text" name="shippingCountry" id="shippingCountry" class="col-9 form-control" required>
-                <div class="col-3"></div>
-                <div class="col invalid-feedback">
-                  Por favor, ingrese el país del envío.
+              <div class="form-group row align-items-center">
+                <div class="col-4">
+                  <label for="shippingCountry" class="mb-0">País: </label>
+                </div>
+                <div class="col">
+                  <input type="text" name="shippingCountry" id="shippingCountry" class="form-control" required>
+                  <div class="invalid-feedback">
+                    Por favor, ingrese el país del envío.
+                  </div>
                 </div>
               </div>
               <hr>
@@ -268,8 +266,7 @@
           <div class="modal-body">
             <div class="form-group p-3">
               <div class="custom-control custom-radio my-2">
-                <input type="radio" id="creditCard" name="paymentMethod" class="custom-control-input" value="1"
-                checked>
+                <input type="radio" id="creditCard" name="paymentMethod" class="custom-control-input" value="1" checked>
                 <label for="creditCard" class="px-2 custom-control-label">Tarjeta de crédito</label>
               </div>
               <div class="custom-control custom-radio my-2">
@@ -277,47 +274,51 @@
                 <label for="bankTransfer" class="px-2 custom-control-label">Transferencia bancaria</label>
               </div>
             </div>
-            
+
             <form id="creditCardForm" novalidate>
               <!-- Credit card form -->
-              <div class="form-group p-3 m-3 border rounded" >
+              <div class="form-group p-3 m-1 m-lg-3 border rounded">
                 <!--Card owner-->
                 <div class="row my-2 align-items-center">
-                  <div class="col-4">
+                  <div class="col-12 col-lg-4">
                     <label for="creditCardOwner" class="mb-0">Nombre del titular: </label>
                   </div>
-                  <div class="col-8">
+                  <div class="col">
                     <input type="text" name="creditCardOwner" id="creditCardOwner" class="form-control" required>
                   </div>
                 </div>
                 <!--Card number-->
                 <div class="row my-2 align-items-center">
-                  <div class="col-4">
+                  <div class="col-12 col-lg-4">
                     <label for="creditCardNumber" class="mb-0">Número: </label>
                   </div>
-                  <div class="col-8">
-                    <input type="number" min="0" name="creditCardNumber" id="creditCardNumber" class="form-control" required>
+                  <div class="col">
+                    <input type="number" min="0" name="creditCardNumber" id="creditCardNumber" class="form-control"
+                      required>
                   </div>
                 </div>
                 <!--Card security number-->
                 <div class="row my-2 align-items-center">
-                  <div class="col-4">
+                  <div class="col-12 col-lg-4">
                     <label for="creditCardNumber" class="mb-0">Código de seguridad: </label>
                   </div>
-                  <div class="col-8">
-                    <input type="number" min="0" name="creditCardNumber" id="creditCardNumber" class="form-control" required>
+                  <div class="col">
+                    <input type="number" min="0" name="creditCardNumber" id="creditCardNumber" class="form-control"
+                      required>
                   </div>
                 </div>
                 <!--Card expiration date-->
                 <div class="row my-2 align-items-center">
-                  <div class="col-4">
+                  <div class="col-12 col-lg-4">
                     <label for="creditCardNumber" class="mb-0">Fecha de vencimiento: </label>
                   </div>
-                  <div class="col-4">
-                    <input type="number" min="1" max="12" name="creditCardExpirationMonth" class="form-control" placeholder="Mes" required>
+                  <div class="col">
+                    <input type="number" min="1" max="12" name="creditCardExpirationMonth" class="form-control"
+                      placeholder="Mes" required>
                   </div>
-                  <div class="col-4">
-                    <input type="number" min="2020" max="2200" name="creditCardExpirationYear" class="form-control" placeholder="Año" required>
+                  <div class="col">
+                    <input type="number" min="2020" max="2200" name="creditCardExpirationYear" class="form-control"
+                      placeholder="Año" required>
                   </div>
                 </div>
                 <hr>
@@ -330,7 +331,7 @@
 
             <form id="bankTransferForm" novalidate class="d-none">
               <!-- Bank transfer form -->
-              <div class="form-group p-3 m-3 border rounded" >
+              <div class="form-group p-3 m-1 m-lg-3 border rounded">
                 <!--Bank-->
                 <div class="row my-2 align-items-center">
                   <div class="col-4">
@@ -348,11 +349,12 @@
                 </div>
                 <!--Bank account number-->
                 <div class="row my-2 align-items-center">
-                  <div class="col-4">
+                  <div class="col-12 col-lg-4">
                     <label for="bankAccountNumber" class="mb-0">Número de cuenta: </label>
                   </div>
-                  <div class="col-8">
-                    <input type="number" min="0" name="bankAccountNumber" id="bankAccountNumber" class="form-control" required>
+                  <div class="col">
+                    <input type="number" min="0" name="bankAccountNumber" id="bankAccountNumber" class="form-control"
+                      required>
                   </div>
                 </div>
                 <hr>
@@ -367,6 +369,47 @@
       </div>
     </div>
 
+    <!-- Modal confirm purchase -->
+    <div class="modal fade" id="confirmPurchaseModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title font-weight-bold">Confirmar compra</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="col">
+              <div class="row">
+                <h4 class="col-12 font-weight-bold">Artículos</h4>
+                <div id="confirmPurchaseArticles" class="col"></div>
+              </div>
+              <hr>
+              <div class="row">
+                <h4 class="col-12 font-weight-bold">Datos de envío</h4>
+                <div class="col" id="confirmPurchaseShippingData"></div>
+              </div>
+              <hr>
+              <div class="row">
+                <h4 class="col-12 font-weight-bold">Costo de compra</h4>
+                <div class="col" id="confirmPurchaseCosts"></div>
+              </div>
+              <hr>
+              <div class="row">
+                <h4 class="col-12 font-weight-bold">Datos de pago</h4>
+                <div class="col" id="confirmPurchasePaymentData"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+            <button type="button" onclick="confirmPurchase()" class="btn btn-primary">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
