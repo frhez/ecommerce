@@ -29,6 +29,11 @@
         font-size: 3.5rem;
       }
     }
+
+    html,
+    body {
+      height: 100%;
+    }
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
@@ -47,7 +52,7 @@
   </script>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #6d0757;">
     <div class="navbar-brand ml-2" href="#">
       <img src="img/brand 1.png" height="42" class="mx-1">
@@ -77,26 +82,86 @@
       </ul>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <div class="container px-0 px-lg-5 py-0 py-lg-4">
+    <h3 class="text-center font-weight-bold p-4">Mi perfil</h3>
+    <div class="form-group py-4 mx-auto mb-5 px-0 px-lg-5 border rounded shadow-sm" style="max-width: 600px;">
+      <div class="col">
+        <div class="form-group">
+          <div class="row py-3 px-4 justify-content-center">
+            <div class="col-8 col-lg-5">
+              <img src="img/defaultProfileImage.png" id="profileImage" alt="imgPerfil" class="w-100">
+            </div>
+            <div class="w-100"></div>
+            <div class="col-12 col-lg-8">
+              <div class="input-group my-3">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-image"></i></div>
+                </div>
+                <input type="text" class="form-control" id="profileImageURL" placeholder="Dirección de la imágen">
+              </div>
+            </div>
+          </div>
+          <div class="row py-3 px-4 align-items-end">
+            <div class="col-12 col-md-3">
+              <label for="profileName">Nombre: </label>
+            </div>
+            <div class="col">
+              <input type="text" name="profileName" id="profileName" class="form-control">
+            </div>
+          </div>
+          <div class="row py-3 px-4 align-items-end">
+            <div class="col-12 col-md-3">
+              <label for="profileAge">Edad: </label>
+            </div>
+            <div class="col">
+              <input type="number" name="profileAge" id="profileAge" class="form-control">
+            </div>
+          </div>
+          <div class="row py-3 px-4 align-items-end">
+            <div class="col-12 col-md-3">
+              <label for="profileEmail">E-mail: </label>
+            </div>
+            <div class="col">
+              <input type="email" name="profileEmail" id="profileEmail" class="form-control">
+            </div>
+          </div>
+          <div class="row py-3 px-4 align-items-end">
+            <div class="col-12 col-md-3">
+              <label for="profilePhone">Teléfono: </label>
+            </div>
+            <div class="col">
+              <input type="number" name="profilePhone" id="profilePhone" class="form-control">
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row  py-3 px-4 justify-content-end">
+          <div class="col-12 col-lg">
+            <button class="btn btn-block btn-secondary" onclick="deleteProfile()">Eliminar cambios</button>
+          </div>
+          <div class="col-12 col-lg">
+            <button class="btn btn-block btn-primary" onclick="saveProfile()">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="wrapper flex-grow-1"></div>
   <footer class="text-muted bg-light">
     <div class="container">
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
-  <div class="alert fade alert-success" role="alert" id="alertResult">
-    <span id="resultSpan"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+  <!--
+
+    <div class="alert fade alert-success" role="alert" id="alertResult">
+      <span id="resultSpan"></span>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  -->
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
