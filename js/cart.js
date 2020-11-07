@@ -426,24 +426,6 @@ function removeArticle(id) {
   showArticles(cartArticles);
 }
 
-//Remove the dots and the signs return a clean number (int)
-function numberFromText(price) {
-  let number = price.replace(/\D/g, "");
-  if (number != "") {
-    number = parseInt(number);
-    return number;
-  }
-  else {
-    return null;
-  }
-}
-
-//Return a number as a price in pesos uruguayos
-function priceFromNumber(number) {
-  let price = "$" + number.toLocaleString('es-UY');
-  return price;
-}
-
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.

@@ -161,3 +161,17 @@ a.custom-card:hover {
 .text-pink{
   color: #c3277d;
 }
+
+.profile-img-container{
+  width: 160px !important;
+  height: 160px !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.profile-img{
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+}

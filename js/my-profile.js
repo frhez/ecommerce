@@ -3,16 +3,28 @@
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 
-    let profileData = localStorage.getItem("profileData");
+    //Checks for user logged
+    if (localStorage.getItem('userName')) {
+        
+        let profileData = localStorage.getItem("profileData");
 
-    if (profileData) {
-        loadProfileData(JSON.parse(profileData));
+        if (profileData) {
+            loadProfileData(JSON.parse(profileData));
+        }
+        
+        let profileImageURL = document.getElementById("profileImageURL");
+        profileImageURL.addEventListener("input", function () {
+            document.getElementById("profileImage").src = document.getElementById("profileImageURL").value;
+        });
     }
-
-    let profileImageURL = document.getElementById("profileImageURL");
-    profileImageURL.addEventListener("input", function(){
-        document.getElementById("profileImage").src = document.getElementById("profileImageURL").value;
-    });
+    else {
+        let content = `
+        <div class="alert-info p-3 border border-info rounded" role="alert">
+          <h5>Ups! Parece que no has iniciado sesión puedes hacerlo <a class="alert-link" href="index.html">haciendo click aquí.</a></h5>
+        </div>
+        `;
+        document.getElementById("divProfile").innerHTML = content;
+      }
 });
 
 //Get the profile fields and save them
@@ -34,6 +46,8 @@ function saveProfile() {
     //Save the object in local storage
     localStorage.setItem("profileData", JSON.stringify(profileData));
 
+    //Refresh the page
+    window.location = "my-profile.html"
 }
 
 //Load the profile data on the page
@@ -47,7 +61,13 @@ function loadProfileData(data) {
     let profilePhone = document.getElementById("profilePhone");
     //Put the values in the fields
     profileImageURL.value = data.image;
-    profileImage.src = data.image;
+    //Put the default profile image if the url is empty
+    if (data.image === ""){
+        profileImage.src = "img/defaultProfileImage.png";
+    }
+    else {
+        profileImage.src = data.image;
+    }
     profileName.value = data.name;
     profileAge.value = data.age;
     profileEmail.value = data.email;
@@ -55,7 +75,7 @@ function loadProfileData(data) {
 }
 
 //Delete the info of the profile in local storage and from the page
-function deleteProfile(){
+function deleteProfile() {
     localStorage.removeItem("profileData");
     document.getElementById("profileImage").src = "img/defaultProfileImage.png";
     document.getElementById("profileImageURL").value = "";

@@ -46,8 +46,6 @@ function publishComment() {
         ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
     let comment = { score: parseInt(rate.value), description: commentContent.value, user: user, dateTime: date };
 
-    console.log(comment);
-
     //Load the commment on the page
     comments.push(comment);
     document.getElementById("productComments").innerHTML = "";
@@ -171,7 +169,7 @@ function loadProductInfo(product) {
     productInfo += `
         <div class="col-12 col-lg-4 border rounded">
             <div class="row">
-                <h1 class="w-100 text-center m-4">${product.currency} ${product.cost.toLocaleString('es-UY')}</h1>
+                <h1 class="w-100 text-center m-4">${convertCurrencySign(product.currency)} ${product.cost.toLocaleString('es-UY')}</h1>
                 <div class="w-100"></div>
                 <button class="btn btn-primary w-100 mx-4">Añadir al carrito</button>
                 <div class="w-100 border-bottom my-4"></div>

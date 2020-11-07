@@ -75,29 +75,34 @@ function showProductsList() {
                 }
 
                 htmlContentToAppend += `
-                    <button onclick="toProduct(` + i + `)" class="list-group-item list-group-item-action">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-md-3 my-1">
-                                <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                            </div>
-                            <div class="col-md-9 my-1">
-                                <div class="card w-100">
-                                    <div class="card-header">
-                                        <div class="d-flex w-100 justify-content-between align-items-center">
-                                            <h4 class="font-weight-bold mb-0">`+ productName + `</h4>
-                                            <h3 class="text-right mb-0">` + product.currency + ` ` + product.cost.toLocaleString('es-UY') + `</h3>
+                <div class="col-12 col-md-4 my-3">
+                    <button onclick="toProduct(` + i + `)" class="btn border rounded shadow h-100">
+                        <div class="row d-flex p-3">
+                            <div class="col">
+                                <div class="row mb-3">
+                                    <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row align-items-center text-center">
+                                                <h5 class="col font-weight-bold">`+ productName + `</h5>
+                                                <hr class="w-100">
+                                                <h4 class="col">` + convertCurrencySign(product.currency) + ` ` + product.cost.toLocaleString('es-UY') + `</h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="mb-1">` + product.description + `</p>
-                                    </div>
-                                    <div class="card-footer px-3 py-1 text-right">
-                                        <small class="text-muted">` + product.soldCount + ` vendidos</small>
+                                        <div class="card-body">
+                                            <p class="">` + product.description + `</p>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <small class="text-muted">` + product.soldCount + ` vendidos</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </button>
+                </div>
                 `
             }
         }
